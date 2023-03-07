@@ -101,7 +101,7 @@ export const bmiCalculator = createAsyncThunk(
 
 export const fetchExerciseDbApi = createAsyncThunk(
     'dataExercise/fetchExerciseDbApi',
-    async (data: any, { dispatch }) => {
+    async (data: any, { dispatch, rejectWithValue }) => {
         try {
             const url = 'https://exerciseapi3.p.rapidapi.com/search/muscles/';
 
@@ -118,7 +118,7 @@ export const fetchExerciseDbApi = createAsyncThunk(
 
             dispatch(setData(json));
         } catch (error) {
-            console.log(error);
+            rejectWithValue(error);
         }
     }
 
@@ -127,7 +127,7 @@ export const fetchExerciseDbApi = createAsyncThunk(
 
 export const searchDataMuscles = createAsyncThunk(
     'dataExercise/searchDataMuscles',
-    async (search: string, { dispatch }) => {
+    async (search: string, { dispatch, rejectWithValue }) => {
         try {
             const url = `https://exerciseapi3.p.rapidapi.com/search/?primaryMuscle=${search}`;
 
@@ -144,7 +144,7 @@ export const searchDataMuscles = createAsyncThunk(
 
             return dispatch(setDataSearch(json));
         } catch (error) {
-            return console.log(error);
+            rejectWithValue(error);
         }
     }
 
@@ -155,7 +155,7 @@ export const searchDataMuscles = createAsyncThunk(
 
 export const addRoutine = createAsyncThunk(
     'dataExercise/addRoutine',
-    async ({ data, token }: postDataRoutine, { dispatch }) => {
+    async ({ data, token }: postDataRoutine, { dispatch, rejectWithValue }) => {
         const { day, exersiceItem } = data;
 
         console.log(exersiceItem)
@@ -180,7 +180,7 @@ export const addRoutine = createAsyncThunk(
             return dispatch(addExerciseToRoutine(json));
         }
         catch (error) {
-            return console.log(error);
+            rejectWithValue(error);
         }
     }
 

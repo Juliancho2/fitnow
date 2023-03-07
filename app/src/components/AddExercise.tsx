@@ -127,7 +127,7 @@ const AddExercise = () => {
     const handleAddExersice = (e: React.MouseEvent<HTMLButtonElement>, value: postDataRoutine) => {
         dispatch(addRoutine(value));
         dispatch(desactiveModal());
-        swal('Added your to routine with');
+        swal('You added to your routine successfully');
     }
     const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setDay(e.target.value);

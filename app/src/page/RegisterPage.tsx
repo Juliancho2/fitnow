@@ -7,6 +7,7 @@ import { useForm } from '../hooks/useForm'
 import MessageErrorValidate from '../components/MessageErrorValidate'
 import { ErrorsForm, FormValues } from '../type'
 
+
 const Container = styled.div` 
     background: rgba(194, 194, 194, 0.33);
     min-height: 100vh;

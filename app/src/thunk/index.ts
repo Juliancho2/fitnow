@@ -24,11 +24,13 @@ interface DeleteRoutineInterface {
     name?: string
 }
 
+const URL = 'https://api-fitnow-production.up.railway.app/api';
+
 export const loginUser = createAsyncThunk(
     'user/loginUser',
     async (data: LogginData, { dispatch, rejectWithValue }) => {
         try {
-            const res = await fetch('http://127.0.0.1:3001/api/login', {
+            const res = await fetch(URL + '/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -51,7 +53,7 @@ export const registerUser = createAsyncThunk(
     'user/registerUser',
     async (data: LogginData) => {
         try {
-            const res = await fetch('http://127.0.0.1:3001/api/user', {
+            const res = await fetch(URL + '/user', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -163,7 +165,6 @@ export const addRoutine = createAsyncThunk(
                 exersiceItem: exersiceItem,
                 day
             }
-            const url = `http://127.0.0.1:3001/api/routine`;
 
             const options = {
                 method: 'POST',
@@ -173,7 +174,7 @@ export const addRoutine = createAsyncThunk(
                 },
                 body: JSON.stringify(newRoutine)
             };
-            const res = await fetch(url, options);
+            const res = await fetch(URL + '/routine', options);
             const json = await res.json();
 
             return dispatch(addExerciseToRoutine(json));
@@ -191,7 +192,7 @@ export const fetchRoutineData = createAsyncThunk(
     async (token: string) => {
 
         try {
-            const res = await fetch('http://127.0.0.1:3001/api/routine', {
+            const res = await fetch(URL + '/routine', {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -212,7 +213,7 @@ export const deleteRoutine = createAsyncThunk(
     'dataExercise/deleteRoutine',
     async (idAndToken: DeleteRoutineInterface, { dispatch }) => {
         const { id, token } = idAndToken;
-        const res = await fetch(`http://127.0.0.1:3001/api/routine/${id}`, {
+        const res = await fetch(`${URL}/routine/${id}`, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -225,7 +226,7 @@ export const deleteExerciseFromRoutine = createAsyncThunk(
     'dataExercise/deleteRoutine',
     async (idAndToken: DeleteRoutineInterface, { dispatch }) => {
         const { id, token, name } = idAndToken;
-        const res = await fetch(`http://127.0.0.1:3001/api/routine/${id}/${name}`, {
+        const res = await fetch(`${URL}/routine/${id}/${name}`, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`

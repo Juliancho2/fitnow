@@ -8,9 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../store/store'
 import { loginUser } from '../thunk'
 import ErrorMessage from '../components/ErrorMessage'
-import { RootState } from '../App'
 import Loader from '../components/Loader'
-import { FormLogin } from '../type'
+import { FormLogin, RootState } from '../type'
 
 const Container = styled.div`
     background: rgba(194, 194, 194, 0.33);
@@ -165,9 +164,9 @@ const LoginPage = () => {
                     <Form onSubmit={handleSubmit}>
                         <>
                             <label htmlFor="username">USERNAME</label>
-                            <input type="text" value={form.username} onChange={handleChange} name="username" />
+                            <input autoComplete='current-username' type="text" value={form.username} onChange={handleChange} name="username" />
                             <label htmlFor="password">PASSWORD</label>
-                            <input type="password" value={form.password} onChange={handleChange} name="password" />
+                            <input autoComplete='current-password' type="password" value={form.password} onChange={handleChange} name="password" />
                             <p>Are you not account?</p><Link to={'/register'}>Sign up</Link>
                             <button>Log in</button>
                         </>

@@ -106,8 +106,10 @@ const ContainerContent = styled.div`
         font-size: 1.4rem;
         font-weight: 300;
         text-align: start;
-        color: #a3a3a3;
+        color: #676767;
         margin-top: 10px;
+        line-height: 30px;
+        font-weight: 400;
     }
     &>.content-right{
         align-self: flex-end;
@@ -141,8 +143,8 @@ const HomePage = () => {
                         <p>Once you've found the exercises that best suit your training goals, you can customize your training routine to achieve better results. Create a routine that fits your schedule and goals, and start putting it to use in the gym today!</p>
                     </div>
                     <div>
-                        <h4> Customize your training routine</h4>
-                        <p>Once you've found the exercises that best suit your training goals, you can customize your training routine to achieve better results. Create a routine that fits your schedule and goals, and start putting it to use in the gym today!</p>
+                        <h4> Calculate your Body Mass Index (BMI) with our exercise application!</h4>
+                        <p>BMI is a common measure used to determine if a person is at a healthy weight. You can easily calculate your BMI and get a clear understanding of your health status.</p>
                     </div>
 
                 </ContainerContent>

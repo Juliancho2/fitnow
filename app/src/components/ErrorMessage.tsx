@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setError } from "../slice/userSlice";
 
 type ErrorProps = {
     errorMessage: any;
@@ -29,13 +31,17 @@ const ErrorContainer = styled.div`
 
 const ErrorMessage: React.FC<ErrorProps> = ({ errorMessage }) => {
     const [visible, setVisible] = useState<boolean>(true);
+    const dispatch=useDispatch()
 
     useEffect(() => {
         const timeout = setTimeout(() => {
             setVisible(false);
         }, 3000);
 
-        return () => clearTimeout(timeout);
+        return () => {
+            clearTimeout(timeout);
+            dispatch(setError())
+        }
     }, []);
 
     return (

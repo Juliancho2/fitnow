@@ -1,94 +1,60 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../store/store'
-import { logOut } from '../slice/userSlice'
+import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../store/store';
+import { logOut } from '../slice/userSlice';
+import { setActive } from '../slice/modalSlice';
+import { RootState } from '../type';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import DropdownMenu from './Dropdown';
 
-const Container = styled.div`
-display: flex;
-justify-content: space-between;
-align-items: center;
-position: fixed;
-width: 100%;
-min-height: 60px;
-background: #FFFFFF;
-box-shadow: 0 4px 6px rgba(196, 196, 196, 0.106);
-z-index: 4;
-`
-const Left = styled.div`
-    margin-left: 20px;
-    &>a{
-        display: flex;
-    align-items: center;
-    }
-    &>a img{
-        width: 70px;
-    }
+const HeaderApp = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+  const { isLogged } = useSelector((state: RootState) => state.user);
 
-`
-const Right = styled.div`
-display: flex;
-justify-content: flex-end;
-align-items: center;
-width: 200px;
-height: 25px;
-& a{
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 400;
-    width: 50%;
-    height: 100%;
-    text-align: center;
-    font-size: 1rem;
-    margin-right: 20px;
-    padding: 5px 8px;
-    background: #ec9737d1;
-    box-shadow: 0 0 4px 2px rgba(179, 178, 178, 0.168);
-    border-radius: 3px;
-}
-& a:hover{
-    opacity: .9;
-    transition: all .5s;
-    background: #d9790cd1;
-}
-&>.routine-link{
-    background: none;
-    box-shadow: none;
-    color: #ec9737d1;
-    :hover{
-        background: none;
-        opacity: .7;
-    }
-}
-`
-type Props = {
-    text?: string | undefined
-}
+  const handleModal = (value: string) => dispatch(setActive(value));
 
-const HeaderApp = ({ text }: Props) => {
-    const dispatch = useDispatch<AppDispatch>();
-    const location = useLocation();
-    let routeButton = '/login';
-    if (text?.toLowerCase().replace(/\s/g, '') === 'logout') routeButton = ''
+  return (
+    <header className="fixed top-0 left-0 w-full min-h-[60px] z-30 bg-white border-b border-gray-300">
+      <nav className="w-full max-w-screen-xl mx-auto flex justify-between items-center">
+        <div className="ml-4">
+          <Link to={'/'}>
+            <img src="/logo.svg" alt="" className="w-[50px]" />
+          </Link>
+        </div>
+        {isLogged ? (
+          <DropdownMenu/>
+        ) : (
+          <div className="flex justify-end items-center gap-5">
+            <Link
+              to={'#'}
+              className="text-decoration-none text-[#2c2c2c] font-bold w-50% h-100 text-center text-base py-2 px-5  rounded-md hover:bg-d9790cd1"
+              style={{ border: '1.5px solid #11E0F8' }}
+              onClick={() => handleModal('login')}
+            >
+              Log in
+            </Link>
+            <Link
+              to={'#'}
+              className="text-decoration-none text-white  bg-[#11E0F8]  font-bold w-50% h-100 text-center text-base mr-4 py-2 px-5  rounded-md hover:bg-d9790cd1"
 
-    const handleLogOut = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => dispatch(logOut())
+              onClick={() => handleModal('signup')}
+            >
+              Sign up
+            </Link>
+          </div>
+        )}
+      </nav>
+    </header>
+  );
+};
 
-    return (
-        <Container>
-            <Left>
-                <Link to={location.pathname === '/' ? '/' : '/dashboard'}><img src="/logo.png" alt="" /></Link>
-            </Left>
-            {
-                (location.pathname === '/' || location.pathname === '/dashboard' || location.pathname === '/dashboard/routine') && (
-                    <Right>
-                        <Link className='routine-link' to={'/dashboard/routine'}>My routine</Link>
-                        <Link to={routeButton} onClick={handleLogOut}>{text}</Link>
-                    </Right>
-                )
-            }
-        </Container >
-    )
-}
+export default HeaderApp;
 
-export default HeaderApp
+
+
+
+
+
+

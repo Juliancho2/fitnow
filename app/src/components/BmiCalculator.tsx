@@ -1,159 +1,85 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
-import { AddOptionData } from '../slice/bmiCalculator'
-import { AppDispatch } from '../store/store'
-import { bmiCalculator, ParamsBmiCalculator } from '../thunk'
-import SpinnerComponent from './SpinnerComponent'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../store/store';
+import { bmiCalculator, ParamsBmiCalculator } from '../thunk';
+import SpinnerComponent from './SpinnerComponent';
+import { RootState } from '../type';
 
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 50vh;
-    background: #e9e9e9;
-    padding: 30px 20px;
-    
-`
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 700px;
-    min-height:300px;
-    &>.title{
-        width: 100%;
-        max-width: 400px;
-        margin-bottom: 20px;
-    }
-    &>.title h3{
-        font-size: 3rem;
-        color: #ec9737d1;
-        font-weight: 300;
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    &>.title p{
-        font-size: 1.4rem;
-        color: #a3a3a3;
-        text-align: center;
-    }
-    &>.container-info{
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-        background: #f3f3f3;
-        padding: 15px;
-        max-width: 400px;
-        &>h3{
-            font-size: 2rem;
-            font-weight: 400;
-            color: #ec9737d1;
-            margin-bottom: 10px;
-        }
-        &>p{
-            font-size: 1.4rem;
-        }
-    }
-`
-const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-    &>button{
-        border: none;
-        background: #e7952a;
-        color: #fff;
-        padding: 0 3px;
-        border-radius: 5px;
-        width: 80px;
-        height: 30px;
-        align-self:center ;
-    }
-`
-const InputContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-    height: 85px;
-    width: 100%;
-    max-width: 400px;
-    &>input{
-        display: inline-block;
-        background: transparent;
-        width: 100%;
-        height: 30px;
-        border: none;
-        outline: none;
-        background: #F7F7F7;
-        padding: 3px 8px;
-    }&>input::placeholder{
-        color: #95919194;
-    }
-`
-const initialState: ParamsBmiCalculator = { height: "", weight: "" }
-
-interface RootState {
-    bmi: AddOptionData
-}
-const BmiCalculator = () => {
-    const [dataCalculator, setDataCalculator] = useState(initialState);
-    const dispatch = useDispatch<AppDispatch>();
-    const { bmi, loading, error } = useSelector((state: RootState) => state.bmi)
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const name = e.target.name;
-        const value = e.target.value;
-
-        setDataCalculator({
-            ...dataCalculator,
-            [name]: value
-        })
-    };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        dispatch(bmiCalculator(dataCalculator));
-    };
-
-    return (
-        <Container>
-            <Wrapper>
-                <div className='title'>
-                    <h3>(BMI) Calculator</h3>
-                    <p>To calculate the Body Mass Index of an individual based on their height and weight.</p>
-                </div>
-                <Form onSubmit={(e) => handleSubmit(e)}>
-                    <InputContainer>
-                        <input required onChange={handleChange} type="number" name='height' value={dataCalculator.height} placeholder='height (cm)' />
-                        <input required onChange={handleChange} type="number" name='weight' value={dataCalculator.weight} placeholder='weight (kg)' />
-                    </InputContainer>
-                    <button>Calculate</button>
-                </Form>
-                {
-                    loading && <SpinnerComponent />
-                }
-                {
-                    (!error && !loading && bmi) && (
-                        <div className='container-info'>
-                            <h3>Your BMI is:</h3><p>{bmi}</p>
-                        </div>
-                    )
-                }
-
-            </Wrapper>
-
-        </Container>
-    )
+type Props={
+  color:string
 }
 
+const BmiCalculator = ({color}:Props) => {
+  const [dataCalculator, setDataCalculator] = useState<ParamsBmiCalculator>({
+    height: '',
+    weight: '',
+  });
+  const dispatch = useDispatch<AppDispatch>();
+  const { bmi, loading, error } = useSelector((state: RootState) => state.bmi);
 
 
-export default BmiCalculator
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setDataCalculator({
+      ...dataCalculator,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(bmiCalculator(dataCalculator));
+  };
+
+  return (
+    <div className={`flex flex-col justify-center items-center w-full min-h-[50vh] p-20 relative ${color}`}>
+      <div className="flex flex-col justify-center items-center w-full max-w-[700px] min-h-[300px] gap-2 z-10">
+        <div className="w-full max-w-[400px] mb-20">
+          <h3 className="text-4xl font-bold text-[#1F2937] text-center mb-10">
+            (BMI) Calculator
+          </h3>
+          <p className="text-2xl text-[#4d4d4d] text-center">
+            To calculate the Body Mass Index of an individual based on their height and weight.
+          </p>
+        </div>
+        <form className="flex flex-col items-center gap-4 w-full" onSubmit={(e) => handleSubmit(e)}>
+          <div className="flex flex-col gap-10 flex-1 min-h-[85px] w-full max-w-[400px]">
+            <input
+              required
+              onChange={handleChange}
+              type="number"
+              name="height"
+              value={dataCalculator.height}
+              placeholder="Height (cm)"
+              className="inline-block w-full h-[35px] border border-gray-300 outline-none p-3 rounded-md"
+            />
+            <input
+              required
+              onChange={handleChange}
+              type="number"
+              name="weight"
+              value={dataCalculator.weight}
+              placeholder="Weight (kg)"
+              className="inline-block w-full [h-35px] outline-none  p-3 border border-gray-300 rounded-md"
+            />
+          </div>
+          <button className="border-none rounded-md bg-[#11E0F8] text-white px-[3px] border-radius-[5px ] w-40 py-3 hover:opacity-70 transition-all duration-500  font-bold text-xl">Calculate</button>
+        </form>
+        {loading && <SpinnerComponent styles='border-4 border-blue-400 animate-spin w-6 h-8 rounded-full mx-auto'/>}
+        {!error && !loading && bmi && (
+          <div className="w-full flex flex-col items-center  mt-10 bg-[#f3f3f3 ] p-15">
+            <h3 className="text-4xl font-normal text-[#ec9737d1] mb-10">Your BMI is:</h3>
+            <p className="text-2xl">{bmi}</p>
+            <div className="mt-20">
+              <img src="https://surgisculpt.com/wp-content/uploads/2022/05/BMI-chart.png" alt="" className="w-[500px]" />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default BmiCalculator;

@@ -1,8 +1,6 @@
 import './App.css'
-import { Routes, Route, useNavigate, json } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import HomePage from './page/HomePage'
-import LoginPage from './page/LoginPage'
-import RegisterPage from './page/RegisterPage'
 import DashboardPage from './page/DashboardPage'
 import { ProtectRoutes } from './components/ProtectRoutes'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +9,11 @@ import { AppDispatch } from './store/store'
 import { setUser } from './slice/userSlice'
 import RoutinePage from './page/RoutinePage'
 import { RootState } from './type'
+import ExercisesPage from './page/ExercisesPage'
+import CalculatorPage from './page/CalculatorPage'
+import ExerciseFoundsPage from './page/ExerciseFoundsPage'
+import DetailExercise from './page/DetailExercise'
+import NotFound from './components/NotFound'
 
 function App() {
   const userState = useSelector((state: RootState) => state.user)
@@ -24,7 +27,7 @@ function App() {
       // const loggedUserParse = JSON.parse(loggedUserJSON);
 
       dispatch(setUser(JSON.parse(loggedUserJSON)));
-      navigate('/dashboard');
+      // navigate('/dashboard');
     }
   }, [])
 
@@ -33,15 +36,26 @@ function App() {
     <div className="App">
       <Routes >
         <Route path='/' element={<HomePage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
 
         <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
           <Route path='/dashboard/' element={<DashboardPage />} />
         </Route>
         <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
-          <Route path='dashboard/routine' element={<RoutinePage />} />
+          <Route path='/dashboard/routine' element={<RoutinePage />} />
         </Route>
+        <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
+          <Route path='/dashboard/search' element={<ExercisesPage />} />
+        </Route>
+        <Route element={<ProtectRoutes isAllowed={!!isLogged} redirectTo={'/dashboard'} />}>
+          <Route path='/dashboard/search/:target' element={<ExerciseFoundsPage />} />
+        </Route>
+        <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
+          <Route path='/dashboard/detail/:id' element={<DetailExercise />} />
+        </Route>
+        <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
+          <Route path='/dashboard/calculator' element={<CalculatorPage />} />
+        </Route>
+        <Route path='*' element={<NotFound />} />
 
       </Routes>
     </div >

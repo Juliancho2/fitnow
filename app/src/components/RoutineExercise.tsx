@@ -1,46 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
+import SideBar from './SideBar'
+import ExercisesToDo from './ExercisesToDo'
+import ExercisesComplete from './ExercisesComplete'
 import { useSelector } from 'react-redux'
-import styled from 'styled-components'
-import { DataUser } from '../slice/userSlice'
-import Menu from './Menu'
-import SpinnerComponent from './SpinnerComponent'
+import { RootState } from '../type'
+import ModalEdit from './ModalEdit'
 
-interface RootState {
-    user: DataUser
+type Props = {
+    dayActive: string
 }
-const Container = styled.div`
-    height: 50vh;
-    padding-top: 80px;
-    width: 100%;
-    margin: 0 auto;
-    &>h4{
-        text-align: center;
-        color: #c49362;
-    }
 
-    
-`
-const RoutineExercise = () => {
-    const userState = useSelector((state: RootState) => state.user);
-    const { routine, loading } = userState;
+const RoutineExercise = ({ dayActive }: Props) => {
+    const [openSideBar, setOpenSideBar] = useState(false);
+    const { exerciseSideBar } = useSelector((state: RootState) => state.dataApi)
 
     return (
-        <Container>
+        <section className='mt-5 max-w-7xl mx-auto grid rounded-md relative z-10 pb-32'>
             {
-                loading && <SpinnerComponent />
+                openSideBar && <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
             }
             {
-                (routine.length === 0 && !loading) && <h4>There is not routine </h4>
+                exerciseSideBar.modalActive && <ModalEdit dayActive={dayActive}/>
             }
-            {
-                routine && routine.map(item => (
-                    <Menu key={item.id} data={item} />
-                ))
-            }
-
-
-
-        </Container>
+            <ExercisesToDo setOpenSideBar={setOpenSideBar} dayActive={dayActive}/>
+            <ExercisesComplete setOpenSideBar={setOpenSideBar} dayActive={dayActive}/>
+        </section>
     )
 }
 

@@ -2,76 +2,36 @@ import React from 'react';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styled from 'styled-components';
-
-
-const ContainerFooter = styled.footer`
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    min-height: 15vh;
-    width: 100%;
-    background: #1A1919;
-
-    &>div  p{
-        font-weight: 400;
-        font-size: 1.2rem;
-        text-align: start;
-        width: 100%;
-        color: #a7a7a7;
-    }
-    & .footer-left{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 5px;
-        padding: 0 20px;
-        &>div{
-            display: flex;
-            text-align: center;
-            font-size: 1.5rem;
-            gap: 10px;
-            color: #a7a7a7;
-        }
-
-    }
-    &>small{
-        font-weight: 400;
-        font-size: 13px;
-        text-align: center;
-        grid-column: 1/3;
-        color: #a7a7a7;
-    }
-    & >.footer-right{
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        gap: 10px;
-        font-size: 2rem;
-        color: #a7a7a7;
-        padding: 0 20px;
-    }
-`
 
 const FooterApp = () => {
-    return (
-        <ContainerFooter>
-            <div className='footer-left'>
-                <div>
-                    <FontAwesomeIcon icon={faPhone} /><p>+33758127283</p>
-                </div>
-                <div>
-                    <FontAwesomeIcon icon={faEnvelope} /><p>fitnow@gmail.com</p>
-                </div>
-
+  return (
+    <footer className="w-full bg-[#E7E9EE]  py-5">
+      <div className="grid grid-cols-1 w-full max-w-screen-xl mx-auto">
+        <div className="grid grid-cols-2 gap-5 p-5">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center text-lg text-gray-700">
+              <FontAwesomeIcon icon={faPhone} className="mr-2" />
+              <p>+33758127283</p>
             </div>
-            <div className='footer-right'>
-                <FontAwesomeIcon icon={faInstagram} />
-                <FontAwesomeIcon icon={faFacebook} />
+            <div className="flex items-center text-lg text-gray-700">
+              <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
+              <p>fitnow@gmail.com</p>
             </div>
-            <small>®2023</small>
+          </div>
+          <div className="flex justify-end items-center gap-5 p-5 ">
+            <FontAwesomeIcon icon={faInstagram} className="text-2xl text-gray-700" />
+            <FontAwesomeIcon icon={faFacebook} className="text-2xl text-gray-700" />
+          </div>
+        </div>
+        <div className="col-span-2 text-center">
+          <p className="text-lg font-bold text-gray-700 my-6">
+            Made by 👽 <a href="https://www.twitter.com/julianchoms" target="_blank" className="text-blue-500">@julianchoms</a>
+          </p>
+          <p className="text-sm text-gray-700">© 2023 All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
-        </ContainerFooter>
-    )
-}
-
-export default FooterApp
+export default FooterApp;

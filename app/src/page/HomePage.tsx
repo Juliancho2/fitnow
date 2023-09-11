@@ -1,158 +1,71 @@
-import React from 'react'
-import styled from 'styled-components';
-import HeaderApp from '../components/HeaderApp';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import HeaderApp from '../components/HeaderApp';
 import FooterApp from '../components/FooterApp';
-
-
-const Container = styled.div`
-    background: #E7E9EE;
-    min-height: 100vh;
-    width: 100%;
-    animation: loadedPage ease-in-out .6s;
-
-    @keyframes loadedPage {
-        0%{
-            opacity: 0;
-        }
-        100%{
-            opacity: 1;
-        }
-    }
-`
-const Main = styled.main`
-    height:auto;
-`
-const ContainerImg = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 100vh;
-    padding-top: 80px;
-    & h2{
-        text-align: start;
-        font-weight: 400;
-        font-size: 5rem;
-        color: #fdfdfdea;
-        text-shadow: 2px 2px 4px rgba(64, 63, 63, 0.539);
-        z-index: 2;
-    }
-    & span{
-        font-size: 5rem;
-        z-index: 2;
-        color: #ffa434c4;
-    }
-    &>a{
-        border: none;
-        background: #ec9737d1;
-        padding: 5px 10px;
-        color: #e3e3e3;
-        height: 36px;
-        width: 120px;
-        margin-top: 10px;
-        box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
-        z-index: 2;
-        border-radius: 3px;
-        text-decoration:none;
-        text-align: center;
-        font-size: 1.5rem;
-    }
-    >a:hover{
-        box-shadow: 0 0 4px 2px rgba(126, 122, 122, 0.517);
-        opacity: .9;
-        transition: all .5s;
-        cursor: pointer;
-    }
-    &::before{
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url("/pexels-leon-ardho-2468366.jpg") center/cover no-repeat;
-        z-index: 1;
-
-    }
-`
-const ContainerContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 35px;
-    width: 100%;
-    max-width: 1000px;
-    margin: 40px auto;
-    min-height: 80vh;
-    padding: 30px 20px;
-    padding-bottom: 50px;
-
-    & div {
-        text-align: center;
-        min-width: 240px;
-        max-width: 500px;
-    }
-    & div h4{
-        color: #ec9737d1;
-        font-size: 3rem;
-        font-weight: 400;
-        text-shadow: 2px 2px 4px rgba(196, 194, 194, 0.08);
-        text-align: start;
-    }
-    &  div p{
-        font-size: 1.4rem;
-        font-weight: 300;
-        text-align: start;
-        color: #676767;
-        margin-top: 10px;
-        line-height: 30px;
-        font-weight: 400;
-    }
-    &>.content-right{
-        align-self: flex-end;
-    }
-
-    &>.content-right  p,>.content-right  h4{
-        text-align: end ;
-        white-space: normal;
-    }
-`
+import { features } from '../static';
+import Started from '../components/Started';
+import BmiCalculator from '../components/BmiCalculator';
+import hero from '/hero.svg';
+import ModalAuth from '../components/ModalAuth';
+import { ModalInterface } from '../type';
 
 const HomePage = () => {
+  const { isActive, mode } = useSelector((state: ModalInterface) => state.modal);
 
-    return (
-        <Container>
-            <HeaderApp text='Login' />
-            <Main >
-                <ContainerImg>
-                    <h2>
-                        ¡Welcome <br /> to <br /> Fit<span>Now!</span>
-                    </h2>
-                    <Link to={'/register'}>Sign up</Link>
-                </ContainerImg>
-                <ContainerContent>
-                    <div>
-                        <h4> Find the perfect exercises for you</h4>
-                        <p>We have a wide variety of exercises that you can do in the gym to strengthen your muscles, improve your resistance and burn calories. All the exercises on our list have been carefully selected by our fitness experts to ensure they are aligned with your training goals.</p>
-                    </div>
-                    <div className='content-right'>
-                        <h4> Customize your training routine </h4>
-                        <p>Once you've found the exercises that best suit your training goals, you can customize your training routine to achieve better results. Create a routine that fits your schedule and goals, and start putting it to use in the gym today!</p>
-                    </div>
-                    <div>
-                        <h4> Calculate your Body Mass Index (BMI) with our exercise application!</h4>
-                        <p>BMI is a common measure used to determine if a person is at a healthy weight. You can easily calculate your BMI and get a clear understanding of your health status.</p>
-                    </div>
+  return (
+    <div className="min-h-screen w-full animate-loadedPage">
+      {isActive && <ModalAuth mode={mode} />}
+      <HeaderApp />
+      <main className="h-auto">
+        <div className="relative flex flex-col justify-center items-center w-full min-h-screen pt-[80px]">
+          <div className='absolute opacity-10'>
+            <img src="https://district0x.io/images/hero-blobs.png" alt="" />
+          </div>
+          <h2 className="text-7xl text-center  font-bold text-[#1F2937] z-2 max-w-[800px] mb-10 relative z-10">
+            Unlock Your Potential, Transform Your Fitness
+          </h2>
+          <p className="font-semibold text-2xl text-gray-500 z-2 mb-20 relative z-10">
+            Discover Your Ideal Fitness Journey: Tailor-Made Workouts, Personalized Results
+          </p>
+          <Link
+            to="/register"
+            className=" relative z-10 flex items-center border-none bg-[#11E0F8] rounded-md px-10 py-5px text-white h-[36px] w-[130px] mt-10 text-center font-bold text-lg hover:opacity-40"
+          >
+            Start To Free
+          </Link>
+          <img src={hero} alt="" className="w-[450px] mt-[40px]" />
+        </div>
+        <div className=" flex flex-col justify-center space-y-40 w-full max-w-[1300px] mx-auto min-h-[80vh] px-[80px] pb-[80px]">
+          {features.map((feature) => (
+            <div
+              key={feature.id}
+              className={`md:flex items-center space-x-8 md:w-[700px] ${feature.id === 1 ? 'md:self-end' : ''}`}
+            >
+              <img
+                src={feature.img}
+                alt=""
+                className="w-[280px] h-[250px]"
+              />
+              <div>
+                <h4 className="text-5xl font-bold text-[#1F2937]">
 
-                </ContainerContent>
-            </Main>
-            <FooterApp />
+                  {feature.title}
+                </h4>
+                <svg width="329" height="330" viewBox="0 0 329 330" fill="none" xmlns="http://www.w3.org/2000/svg" className="pointer-events-none absolute mt-36 hidden md:block  h-auto w-56 text-gray-600 lg:block"><path d="M49.4338 281.625C82.5158 295.39 157.097 293.77 150.777 202.011C147.515 154.651 176.889 66.7823 320.48 94.1868" stroke="#E9E9EE" stroke-width="3" stroke-linecap="round"></path><path d="M8.05684 234.256C41.1389 248.021 115.72 246.401 109.4 154.642C106.138 107.282 135.512 19.4132 279.103 46.8177" stroke="#E9E9EE" stroke-width="3" stroke-linecap="round"></path></svg>
+                <p className="text-[1.5rem] font-normal text-gray-500 mt-10 ">
+                  {feature.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <BmiCalculator color='bg-[#F5FEFD]'/>
+        <Started />
+      </main>
+      <FooterApp />
+    </div>
+  );
+};
 
-        </Container>
-    )
-}
-
-export default HomePage
+export default HomePage;

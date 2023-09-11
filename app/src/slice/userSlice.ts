@@ -1,15 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRoutineData, loginUser } from "../thunk";
-import { DataFromApiSearch } from "../type";
+import { addRoutine, fetchRoutineData, loginUser } from "../thunk";
+import { DataFromApiExercise } from "../type";
 
-export type Error = {
-    error: string | object
-}
+
+export type Error = string
 
 export interface Routine {
     id?: string
     day: string;
-    exersiceItem: Array<DataFromApiSearch>
+    exersiceItem: Array<DataFromApiExercise>
 }
 
 export interface DataUser {
@@ -17,7 +16,7 @@ export interface DataUser {
     token: string,
     isLogged: boolean,
     loading: boolean,
-    error: any,
+    error: Error,
     routine: Array<Routine>
 }
 
@@ -27,7 +26,7 @@ const initialState: DataUser = {
     isLogged: false,
     token: '',
     loading: false,
-    error: null,
+    error: "",
     routine: []
 }
 
@@ -39,8 +38,14 @@ const userSlice = createSlice({
             state.isLogged = true
             state.username = action.payload.username;
             state.token = action.payload.token;
-            state.routine = [];
+            state.routine = action.payload.routine;
             localStorage.setItem('loggedAppUser', JSON.stringify(action.payload))
+        },
+        setError: (state) => {
+            state.error = ""
+        },
+        setRoutine: (state, action) => {
+            state.routine=action.payload
         },
         logOut: (state) => {
             window.localStorage.removeItem('loggedAppUser');
@@ -65,46 +70,67 @@ const userSlice = createSlice({
         },
         deleteExerciseFromState: (state, action) => {
             state.routine.forEach(item => {
-                if (item.id === action.payload.id) {
-                    item.exersiceItem = item.exersiceItem.filter(item => item.Name !== action.payload.name);
+                if (item.day === action.payload.name) {
+                    item.exersiceItem = item.exersiceItem.filter((item) => item.id !== action.payload.id);
                 }
             })
         }
     },
     extraReducers: (builder) => {
         builder.addCase(loginUser.pending, (state, action) => {
+            state.error = ""
             state.loading = true;
-            state.error = null;
-
         })
         builder.addCase(loginUser.fulfilled, (state, action) => {
-            state.error = null;
+            state.error = ""
             state.loading = false;
         })
 
         builder.addCase(loginUser.rejected, (state, action) => {
-            state.error = action.payload
+            state.error = String(action.payload)
             state.loading = false;
         })
+
+
         builder.addCase(fetchRoutineData.pending, (state, action) => {
             state.loading = true;
-            state.error = null;
 
         })
         builder.addCase(fetchRoutineData.fulfilled, (state, action) => {
-            state.error = null;
             state.loading = false;
             state.routine = action.payload;
         })
 
         builder.addCase(fetchRoutineData.rejected, (state, action) => {
-            state.error = action.payload
+            state.error = String(action.payload)
+            state.loading = false;
+        })
+
+
+        builder.addCase(addRoutine.pending, (state, action) => {
+            state.loading = true;
+
+        })
+        builder.addCase(addRoutine.fulfilled, (state, action) => {
+            state.loading = false;
+        })
+
+        builder.addCase(addRoutine.rejected, (state, action) => {
+            state.error = String(action.error.message)
             state.loading = false;
         })
     }
 
 })
 
-export const { logOut, setUser, addExerciseToRoutine, deleteRoutineFromState, deleteExerciseFromState } = userSlice.actions;
+export const {
+    logOut,
+    setUser,
+    addExerciseToRoutine,
+    deleteRoutineFromState,
+    deleteExerciseFromState,
+    setError,
+    setRoutine
+} = userSlice.actions;
 
 export default userSlice.reducer;

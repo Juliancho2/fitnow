@@ -7,7 +7,7 @@ loginRouter.post('/', async (req, res) => {
     const { body } = await req;
     const { username, password } = body;
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).populate('routine');
     const passwordCorrect = user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
     if (!(user && passwordCorrect)) {
@@ -27,7 +27,8 @@ loginRouter.post('/', async (req, res) => {
     )
     return res.send({
         username: user.username,
-        token
+        token,
+        routine:user.routine,
     })
 
 

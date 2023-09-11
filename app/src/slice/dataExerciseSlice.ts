@@ -1,23 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { searchDataMuscles } from '../thunk/index'
+import { fetchExerciseDbApi } from '../thunk/index'
 import { DataFromApi } from "../type";
 export type DataFromApiMuscles = Array<string>
+
+const initialExerciseToAdd = {
+    modalActive: false,
+    exerciseItem: {
+        name: "",
+        gifUrl: "",
+        target: "",
+        bodyPart: "",
+        id: "",
+        equipment: "",
+        complete: false,
+        serial: 0,
+        repeat: 0,
+        title: ""
+    }
+}
 
 const initialState: DataFromApi = {
     dataMuscles: [],
     dataSearch: [],
-    exerciseToAdd: {
-        modalActive: false,
-        exerciseItem: {
-            Force: "",
-            Name: "",
-            ['Primary Muscles']: [],
-            ['Secondary Muscles']: [],
-            Type: "",
-            WorkoutType: [],
-            ['Youtube link']: ""
-        }
-    },
+    exerciseToAdd: initialExerciseToAdd,
+    exerciseSideBar: initialExerciseToAdd,
     isLoading: false
 }
 
@@ -32,29 +38,50 @@ const dataExerciseSlice = createSlice({
         setDataSearch: (state, action) => {
             state.dataSearch = action.payload;
         },
-        activeModal: (state, action) => {
+        setExerciseSidebar: (state, action) => {
+            state.exerciseSideBar.exerciseItem = action.payload;
+        },
+
+        activeAddExerciseModal: (state, action) => {
             state.exerciseToAdd.modalActive = true;
             state.exerciseToAdd.exerciseItem = action.payload;
 
         },
-        desactiveModal: (state) => {
-            state.exerciseToAdd.modalActive = false
-        }
+        desactiveAddExerciseModal: (state) => {
+            state.exerciseToAdd = initialExerciseToAdd
+        },
+        activeEditExerciseModal: (state, action) => {
+            state.exerciseSideBar.modalActive = true;
+            state.exerciseSideBar.exerciseItem = action.payload;
+
+        },
+        desactiveEditExerciseModal: (state) => {
+            state.exerciseSideBar = initialExerciseToAdd
+        },
 
     },
     extraReducers: (builder) => {
-        builder.addCase(searchDataMuscles.pending, (state, action) => {
+
+
+        builder.addCase(fetchExerciseDbApi.pending, (state, action) => {
             state.isLoading = true;
         })
-        builder.addCase(searchDataMuscles.fulfilled, (state, action) => {
+        builder.addCase(fetchExerciseDbApi.fulfilled, (state, action) => {
             state.isLoading = false;
 
         })
-        builder.addCase(searchDataMuscles.rejected, (state, action) => {
+        builder.addCase(fetchExerciseDbApi.rejected, (state, action) => {
             state.isLoading = false;
         })
     }
 })
 
-export const { setData, setDataSearch, activeModal, desactiveModal } = dataExerciseSlice.actions
+export const { setData,
+    setDataSearch,
+    activeAddExerciseModal,
+    desactiveAddExerciseModal,
+    setExerciseSidebar,
+    activeEditExerciseModal,
+    desactiveEditExerciseModal
+ } = dataExerciseSlice.actions
 export default dataExerciseSlice.reducer;

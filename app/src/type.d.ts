@@ -1,3 +1,5 @@
+import { AddOptionData } from "./slice/bmiCalculator";
+
 /*-----------interface login--------*/
 export interface FormLogin {
     username: string;
@@ -43,29 +45,43 @@ export interface Data {
 };
 
 export interface RootState {
-    user: Data
+    user: Data,
+    dataApi:DataFromApi,
+    bmi:AddOptionData
 }
 
+export interface ModalInterface{
+    modal:{
+        isActive:boolean,
+        mode:string
+    },
+
+}
 
 
 
 /*-----------interface Data from api--------*/
-export interface DataFromApiSearch {
-    Force: string
-    Name: string
-    ['Primary Muscles']: Array<string>
-    ['Secondary Muscles']: Array<string>
-    Type: string
-    WorkoutType: Array<string>
-    ['Youtube link']: string
+
+export interface DataFromApiExercise{
+    bodyPart:string,
+    equipment:string,
+    gifUrl:string,
+    id:string,
+    target:string,
+    name:string,
+    complete:boolean,
+    serial:number,
+    repeat:number,
+    title:string
 }
 interface exerciseToAdd {
     modalActive: boolean;
-    exerciseItem: DataFromApiSearch
+    exerciseItem: DataFromApiExercise
 }
 export interface DataFromApi {
     dataMuscles: DataFromApiMuscles;
     dataSearch: Array<DataFromApiSearch>,
     exerciseToAdd: exerciseToAdd,
+    exerciseSideBar: exerciseToAdd,
     isLoading: boolean
 }

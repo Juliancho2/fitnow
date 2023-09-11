@@ -1,46 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
 import HeaderApp from '../components/HeaderApp'
-import Menu from '../components/Menu'
 import RoutineExercise from '../components/RoutineExercise'
-import SpinnerComponent from '../components/SpinnerComponent'
 import { AppDispatch } from '../store/store'
 import { fetchRoutineData } from '../thunk'
 import { RootState } from '../type'
-
-const Container = styled.div`
-    min-height: 100vh;
-    width: 100%;
-    animation: loadedPage ease-in-out .6s;
-
-    @keyframes loadedPage {
-        0%{
-            opacity: 0;
-        }
-        100%{
-            opacity: 1;
-        }
-    }
-`
+import Days from '../components/Days'
 
 const RoutinePage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const userState = useSelector((state: RootState) => state.user);
     const { token } = userState;
-
-    useEffect(() => {
-        dispatch(fetchRoutineData(token))
-    }, []);
+    const [day, setDay] = useState("monday")
 
 
     return (
-        <Container>
-            <HeaderApp text={'Log out'} />
-            <RoutineExercise />
-
-
-        </Container>
+        <div className='animate-loadPage min-h-screen  box-border relative'>
+            <HeaderApp />
+            <div className='absolute opacity-5'>
+                <img src="https://district0x.io/images/hero-blobs.png" alt="" />
+            </div>
+            <Days day={day} setDay={setDay} />
+            <RoutineExercise dayActive={day} />
+        </div>
     )
 }
 

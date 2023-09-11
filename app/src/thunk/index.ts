@@ -25,8 +25,8 @@ interface DeleteRoutineInterface {
     name: string
 }
 
-// const URL = 'https://api-fitnow-production.up.railway.app/api';
-const URL= 'http://localhost:3001/api'
+// const URL = import.meta.env.VITE_URL_API_MONGO;
+const URL= import.meta.env.VITE_URL_LOCALHOST
 
 export const loginUser = createAsyncThunk(
     'user/loginUser',
@@ -80,12 +80,12 @@ export const bmiCalculator = createAsyncThunk(
     async (data: ParamsBmiCalculator, { dispatch, rejectWithValue }) => {
         const { height, weight } = data;
         try {
-            const url = `https://body-mass-index-bmi-calculator.p.rapidapi.com/metric?weight=${weight}&height=${height}`;
+            const url = `${import.meta.env.VITE_URL_API_BMI}metric?weight=${weight}&height=${height}`;
             const options = {
                 method: "GET",
                 headers: {
-                    'X-RapidAPI-Key': '56276a89b4msh8a12ac638510a71p18bb22jsn212b9d08ac49',
-                    'X-RapidAPI-Host': 'body-mass-index-bmi-calculator.p.rapidapi.com'
+                    'X-RapidAPI-Key': import.meta.env.VITE_API_KEY_BMI,
+                    'X-RapidAPI-Host': import.meta.env.VITE_API_HOST_BMI
                 }
             };
             const res = await fetch(url, options);
@@ -106,18 +106,18 @@ export const fetchExerciseDbApi = createAsyncThunk(
     async (data: {name:string}, { dispatch, rejectWithValue }) => {
 
         try {
-            // const url = `https://exercisedb.p.rapidapi.com/exercises/target/${data.name}`;
+            const url = `${import.meta.env.VITE_URL_API_EXERCISE}target/${data.name}`;
 
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': '56276a89b4msh8a12ac638510a71p18bb22jsn212b9d08ac49',
-                    'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+                    'X-RapidAPI-Key':import.meta.env.VITE_API_KEY_EXERCISE_DB,
+                    'X-RapidAPI-Host': import.meta.env.VITE_API_HOST_EXERCISE_DB
                   }
             };
 
-            // const res = await fetch(url, options);
-            // const json = await res.json();
+            const res = await fetch(url, options);
+            const json = await res.json();
 
             dispatch(setDataSearch(exampleCard));
         } catch (error) {
@@ -157,7 +157,6 @@ export const addRoutine = createAsyncThunk(
             throw new Error(json.message)
         }
         dispatch(addExerciseToRoutine(json))
-        // Ahora, puedes despachar una acción utilizando `dispatch` directamente
          
         
       } catch (error) {

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Outlet, useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import {  useParams } from 'react-router-dom'
 import HeaderApp from '../components/HeaderApp'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchExerciseDbApi } from '../thunk'

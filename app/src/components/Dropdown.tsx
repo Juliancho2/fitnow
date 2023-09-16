@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../type";
+import { RootState } from "../interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { logOut } from "../slice/userSlice";
+import { logOut } from "../redux/slice/userSlice";
 
 const DropdownMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +14,10 @@ const DropdownMenu = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleLogOut=()=>{
+    dispatch(logOut())
+  }
 
   return (
     <div className="relative inline-block text-left">
@@ -31,20 +35,20 @@ const DropdownMenu = () => {
       >
         <div className="py-1 bg-white rounded-md shadow-xs ">
           <Link
-            to="/dashboard/routine"
-            className="block px-4 py-2 text-center text-sm text-gray-700 hover:bg-gray-100"
-          >
-            My Routine
-          </Link>
-          <Link
             to="/dashboard"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-center"
           >
             Dashboard
           </Link>
           <Link
+            to="/dashboard/routine"
+            className="block px-4 py-2 text-center text-sm text-gray-700 hover:bg-gray-100"
+          >
+            My Routine
+          </Link>
+          <Link
             to="#"
-            onClick={()=>dispatch(logOut())}
+            onClick={()=>handleLogOut()}
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-center"
           >
             Logout

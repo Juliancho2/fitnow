@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Login from './Login';
 import SignUp from './SignUp';
 import { useDispatch } from 'react-redux';
-import { setClose } from '../slice/modalSlice';
+import { setClose } from '../redux/slice/modalSlice';
 
 type Props={
     mode:string

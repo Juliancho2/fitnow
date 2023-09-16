@@ -1,4 +1,4 @@
-import { AddOptionData } from "./slice/bmiCalculator";
+import { AddOptionData } from "./redux/slice/bmiCalculator";
 
 /*-----------interface login--------*/
 export interface FormLogin {
@@ -24,30 +24,46 @@ export interface UseFormReturn {
     form: FormValues;
     errors: ErrorsForm;
     loading: boolean;
-    response: boolean | null;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleBlur: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
-/*-----------interface Data--------*/
-type Error = {
-    error: string | object
+/*-----------interface DataUser--------*/
+interface ErrorUser  {
+    name:string,
+    isError:boolean
 }
 
-export interface Data {
+export interface Routine {
+    id?: string;
+    day: string;
+    exersiceItem: Array<DataFromApiExercise>;
+}
+
+export interface ExerciseToAdd extends Omit<Routine, 'exersiceItem'> {
+    exersiceItem: DataFromApiExercise;
+}
+export interface DataUser {
     username: string,
     token: string,
-    isLogged: boolean,
-    loading: boolean,
-    error: Error,
-
+    isLogged: boolean | null,
+    isLoading: boolean,
+    errorMessage: ErrorUser,
+    routine: Array<Routine>
 };
 
+interface BodyTarget{
+    isLoading:string,
+    errorMessage:ErrorUser,
+    bodyItems:[]
+}
+
 export interface RootState {
-    user: Data,
+    user: DataUser,
     dataApi:DataFromApi,
-    bmi:AddOptionData
+    bmi:AddOptionData,
+    bodyTarget:BodyTarget
 }
 
 export interface ModalInterface{
@@ -57,8 +73,6 @@ export interface ModalInterface{
     },
 
 }
-
-
 
 /*-----------interface Data from api--------*/
 
@@ -70,18 +84,19 @@ export interface DataFromApiExercise{
     target:string,
     name:string,
     complete:boolean,
-    serial:number,
-    repeat:number,
+    serial:string,
+    repeat:string,
     title:string
 }
 interface exerciseToAdd {
     modalActive: boolean;
     exerciseItem: DataFromApiExercise
 }
+
 export interface DataFromApi {
-    dataMuscles: DataFromApiMuscles;
-    dataSearch: Array<DataFromApiSearch>,
+    dataSearch: Array<DataFromApiExercise>,
     exerciseToAdd: exerciseToAdd,
     exerciseSideBar: exerciseToAdd,
-    isLoading: boolean
+    isLoading: boolean,
+    errorMessage: ErrorUser,
 }

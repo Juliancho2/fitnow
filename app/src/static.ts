@@ -22,25 +22,6 @@ export const features = [
     },
 ]
 
-export const bodyParts = [
-    { name: "biceps", description: "The biceps are muscles located in the front of the arms and are responsible for elbow flexion." },
-    { name: "calves", description: "The calf muscles, also known as the gastrocnemius and soleus, are responsible for ankle flexion and assist in locomotion." },
-    { name: "cardiovascular system", description: "The cardiovascular system consists of the heart and blood vessels and is essential for the transportation of blood and oxygen throughout the body." },
-    { name: "delts", description: "The deltoids are the shoulder muscles and allow for arm mobility in various directions." },
-    { name: "forearms", description: "The forearms contain various muscles that control wrist flexion and extension, as well as finger movements." },
-    { name: "glutes", description: "The glutes, or gluteal muscles, are located in the buttocks and are important for posture and locomotion." },
-    { name: "hamstrings", description: "The hamstrings are a group of muscles at the back of the thigh that flex the knee and extend the hip." },
-    { name: "lats", description: "The latissimus dorsi, or lats, are large muscles in the upper back and are responsible for shoulder extension and arm adduction." },
-    { name: "levator scapulae", description: "The levator scapulae muscle is located in the upper back and elevates the scapula." },
-    { name: "pectorals", description: "The pectorals, or pectoral muscles, are located in the chest and are responsible for arm flexion and adduction." },
-    { name: "quads", description: "The quadriceps are a group of four muscles in the front of the thigh that extend the knee." },
-    { name: "serratus anterior", description: "The serratus anterior is a muscle on the side of the ribcage that aids in arm elevation." },
-    { name: "spine", description: "The spine, or spinal column, is a bony structure that protects the spinal cord and provides support for the body." },
-    { name: "traps", description: "The trapezius muscles, or traps, are muscles in the upper back and neck that allow for shoulder elevation and rotation." },
-    { name: "triceps", description: "The triceps are muscles on the back of the arm that are responsible for elbow extension." },
-    { name: "upper back", description: "The upper back includes muscles such as the trapezius and latissimus dorsi, which contribute to posture and mobility." }
-]
-
 export const daysOfWeek = [
 
     { name: "Monday", id: 1, color: "#39ecff" },
@@ -62,7 +43,7 @@ export const exampleCard = [
         "target": "biceps"
     },
     {
-        "bodyPart": "upper arms",
+        "bodyPart": "Example",
         "equipment": "band",
         "gifUrl": "https://api.exercisedb.io/image/irV8OHVBDHejkX",
         "id": "0969",

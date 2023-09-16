@@ -1,32 +1,30 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { DataUser, setRoutine } from '../slice/userSlice';
-
-interface RootState {
-    user: DataUser
-}
-
+import {  setRoutine } from '../redux/slice/userSlice';
+import { RootState } from '../interface';
 
 const useDrag = (dayActive:string) => {
-    const userState = useSelector((state: RootState) => state.user);
-    const { routine } = userState;
-    const dispatch = useDispatch();
+    const dispatch=useDispatch()
+    const { routine } = useSelector((state: RootState) => state.user)
+    
+    const reorder=(list:any,startIndex:any, endIndex:any)=>{
+        const result= [...list]
+        const [removed]=result.splice(startIndex,1)
+        result.splice(endIndex,0,removed)
 
-    const startDrag = (evt: React.DragEvent<HTMLDivElement>, item: { id: string }) => {
-        evt.dataTransfer.setData('itemID', item.id);
-    };
-    const draggingOver = (evt: React.DragEvent<HTMLDivElement>) => {
-        evt.preventDefault();
-    };
+        return result
+    }
 
-    const onDrop = (evt: React.DragEvent<HTMLDivElement>) => {
-        evt.preventDefault();
-        const itemID = evt.dataTransfer.getData('itemID');
+    const handleDrapAndDrop=(result:any)=>{
+        if(!result.destination) return
+        if( result.source.index === result.destination.index && result.source.droppableId
+            === result.destination.droppableId
+            ) return
 
         const updatedRoutine = routine.map((routineItem) => {
-            if (routineItem.day === dayActive) {
+            if (routineItem.day === dayActive && result.source.droppableId !== result.destination.droppableId) {
                 const updatedExerciseItem = routineItem.exersiceItem.map((item) => {
-                    if (item.id === itemID) {
+                    if (item.id === result.draggableId) {
                         return { ...item, complete: !item.complete };
                     }
                     return item;
@@ -35,11 +33,18 @@ const useDrag = (dayActive:string) => {
             }
             return routineItem;
         });
+        
+        const itemIndex=updatedRoutine.findIndex(item=>item.day === dayActive)
+        const res=reorder(updatedRoutine[itemIndex].exersiceItem,result.source.index, result.destination.index)
+        const modifiqueIndex={ ...updatedRoutine[itemIndex], exersiceItem: res }
+        const newRoutine=updatedRoutine.map(item=>{
+            if(item.id === modifiqueIndex.id) return modifiqueIndex
+            return item
+        })
+        dispatch(setRoutine(newRoutine));
+    }
 
-        dispatch(setRoutine(updatedRoutine));
-    };
-
-    return {startDrag,draggingOver,onDrop}
+    return {handleDrapAndDrop}
 }
 
 export default useDrag

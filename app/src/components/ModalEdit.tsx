@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { desactiveEditExerciseModal } from '../slice/dataExerciseSlice'
+import { desactiveEditExerciseModal } from '../redux/slice/dataExerciseSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { RootState } from '../type'
+import { RootState } from '../interface'
 import Swal from 'sweetalert2'
-import { addRoutine, editExerciseToRoutine } from '../thunk'
-import { setError } from '../slice/userSlice'
+import {  editExerciseToRoutine } from '../redux/thunk'
+import { setError } from '../redux/slice/userSlice'
 import { daysOfWeek } from '../static'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { AppDispatch } from '../redux/store/store'
 
 const initialForm = {
     title: "",
@@ -22,12 +23,10 @@ type Props = {
 
 const ModalEdit = ({dayActive}:Props) => {
     const { exerciseSideBar } = useSelector((state: RootState) => state.dataApi)
-    const { token, error } = useSelector((state: RootState) => state.user)
+    const { token,errorMessage } = useSelector((state: RootState) => state.user)
 
     const [formData, setFormData] = useState(initialForm)
-
-    const [day, setDay] = useState("")
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const handleClickOutside = () => {
         dispatch(desactiveEditExerciseModal())
@@ -76,11 +75,11 @@ const ModalEdit = ({dayActive}:Props) => {
 
         dispatch(editExerciseToRoutine(data));
 
-        if (error) {
+        if (errorMessage.isError) {
             Swal.fire({
                 position: 'top-end',
                 icon: 'error',
-                title: error,
+                title: errorMessage.name,
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -89,7 +88,6 @@ const ModalEdit = ({dayActive}:Props) => {
 
 
         setFormData(initialForm)
-        setDay("")
         dispatch(desactiveEditExerciseModal())
     }
 
@@ -100,7 +98,7 @@ const ModalEdit = ({dayActive}:Props) => {
                 <form onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleFormClick(e)} className='relative grid grid-cols-2 border border-gray-300 rounded-md animate-scaleImg  bg-white shadow-md w-full h-full py-6 px-8 gap-3 items-center'>
                     <FontAwesomeIcon onClick={() => handleClickOutside()} className='absolute top-5 right-5 h-6 w-6 text-gray-400' icon={faXmark} />
                     <h2 className='col-span-2 text-center font-semibold text-xl text-primary'>Edit exercise: {exerciseSideBar.exerciseItem.name}</h2>
-                    <div>
+                    {/* <div>
                         <label htmlFor="" >Add a title</label>
                         <input
                             onChange={(e) => handleChange(e)}
@@ -110,25 +108,7 @@ const ModalEdit = ({dayActive}:Props) => {
                             placeholder='Title'
                             className=" h-12 w-full rounded-lg border border-gray-300 text-gray-700 sm:text-sm px-4"
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="" >Day*</label>
-                        <select
-                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDay(e.target.value)}
-                            value={day}
-                            name="day"
-                            id="HeadlineAct"
-                            className="h-12 w-full rounded-lg border border-gray-300 text-gray-700 sm:text-sm"
-                        >
-                            <option value="">Please day</option>
-                            {
-                                daysOfWeek.map((day) => (
-                                    <option key={day.id} value={day.name}>{day.name}</option>
-                                ))
-                            }
-
-                        </select>
-                    </div>
+                    </div> */}
                     <div>
                         <label htmlFor="" >Number of the serial*</label>
                         <input

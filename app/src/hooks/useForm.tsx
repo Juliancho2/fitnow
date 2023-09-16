@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/store';
-import { registerUser } from '../thunk';
-import { ErrorsForm, FormValues, UseFormProps, UseFormReturn } from '../type';
+import { AppDispatch } from '../redux/store/store';
+import { registerUser } from '../redux/thunk';
+import { ErrorsForm, FormValues, UseFormProps, UseFormReturn } from '../interface';
+import Swal from 'sweetalert2';
 
 
 const useForm = ({ initialForm, validateForm }: UseFormProps): UseFormReturn => {
     const [form, setForm] = useState<FormValues>(initialForm);
     const [errors, setErrors] = useState<ErrorsForm>({});
     const [loading, setLoading] = useState<boolean>(false);
-    const [response, setResponse] = useState<boolean | null>(null);
     const dispatch = useDispatch<AppDispatch>()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -38,11 +38,20 @@ const useForm = ({ initialForm, validateForm }: UseFormProps): UseFormReturn => 
                     username: form.username,
                     password: form.password
                 }
-                dispatch(registerUser(newUser));
-                setResponse(true);
+                const res=await dispatch(registerUser(newUser));
+                
                 setForm(initialForm);
 
-                setTimeout(() => setResponse(false), 5000);
+                if(res.payload){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Register success',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                }
+
             }
         } catch (error) {
             console.log(error);
@@ -53,7 +62,6 @@ const useForm = ({ initialForm, validateForm }: UseFormProps): UseFormReturn => 
         form,
         errors,
         loading,
-        response,
         handleChange,
         handleBlur,
         handleSubmit,

@@ -1,23 +1,22 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../store/store';
-import { logOut } from '../slice/userSlice';
-import { setActive } from '../slice/modalSlice';
-import { RootState } from '../type';
+import { AppDispatch } from '../redux/store/store';
+import { logOut } from '../redux/slice/userSlice';
+import { setActive } from '../redux/slice/modalSlice';
+import { RootState } from '../interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import DropdownMenu from './Dropdown';
 
 const HeaderApp = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
   const { isLogged } = useSelector((state: RootState) => state.user);
 
   const handleModal = (value: string) => dispatch(setActive(value));
 
   return (
     <header className="fixed top-0 left-0 w-full min-h-[60px] z-30 bg-white border-b border-gray-300">
-      <nav className="w-full max-w-screen-xl mx-auto flex justify-between items-center">
+      <nav className="w-full max-w-screen-xl mx-auto flex justify-between items-center px-3">
         <div className="ml-4">
           <Link to={'/'}>
             <img src="/logo.svg" alt="" className="w-[50px]" />

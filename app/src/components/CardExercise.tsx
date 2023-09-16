@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { DataFromApiExercise, RootState } from '../type'
+import { DataFromApiExercise } from '../interface'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux'
-import { activeAddExerciseModal } from '../slice/dataExerciseSlice'
+import { activeAddExerciseModal } from '../redux/slice/dataExerciseSlice'
 
 type Props = {
   exerciseData: DataFromApiExercise

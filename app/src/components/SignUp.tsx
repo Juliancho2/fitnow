@@ -1,12 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setClose } from '../slice/modalSlice';
-import { ErrorsForm, FormValues } from '../type';
+import { useDispatch, useSelector } from 'react-redux';
+import { setClose } from '../redux/slice/modalSlice';
+import { ErrorsForm, FormValues, RootState } from '../interface';
 import { faEye, faEyeSlash, faLock, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import MessageErrorValidate from './MessageErrorValidate';
 import { useForm } from '../hooks/useForm';
+import Swal from 'sweetalert2';
+import { setError } from '../redux/slice/userSlice';
+import SpinnerComponent from './SpinnerComponent';
 
 
 const initialForm: FormValues = {
@@ -46,14 +49,28 @@ const SignUp = ({ setIsLoggin }: Props) => {
     const {
         form,
         errors,
-        loading,
-        response,
         handleChange,
         handleBlur,
         handleSubmit,
     } = useForm({ initialForm, validateForm });
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const {isLoading,errorMessage}=useSelector((state:RootState)=>state.user)
+
+    useEffect(()=>{
+        if(errorMessage.isError){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: errorMessage.name,
+                showConfirmButton: false,
+                timer: 1500
+              })
+        }
+        return()=>{
+            dispatch(setError())
+        }
+    },[errorMessage.isError])
 
     return (
         <div className="min-h-screen flex items-center justify-center animate-scaleImg">
@@ -64,7 +81,7 @@ const SignUp = ({ setIsLoggin }: Props) => {
                         onClick={() => dispatch(setClose())}
                         icon={faXmark}
                     />
-                    <form onSubmit={handleSubmit} className='mt-10 px-8 flex flex-col gap-4 min-h-[300px] '>
+                    <form onSubmit={handleSubmit} className='mt-10 px-8 flex flex-col gap-4 min-h-[300px] relative'>
                         <div>
                             <label htmlFor="username" className='text-base font-semibold'>Username</label>
                             <div className="flex items-center border border-gray-300 rounded px-2">
@@ -149,9 +166,8 @@ const SignUp = ({ setIsLoggin }: Props) => {
                             className="w-full py-2 px-4 bg-[#11E0F8]  hover:bg-blue-600 text-white font-semibold rounded-md mt-4"
                             type="submit"
                         >
-                            Sign up
+                           {!isLoading ? 'Sign Up' : <SpinnerComponent styles='border-4 border-white animate-spin w-6 h-8 rounded-full mx-auto' />}
                         </button>
-                        {response && <h4>"The user has been registered"</h4>}
                         {Object.keys(errors).length >= 1 && <MessageErrorValidate message={Object.values(errors)} />}
 
                     </form>

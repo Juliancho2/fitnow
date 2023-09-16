@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { SetStateAction } from 'react'
 import Temporizador from './Chronometer'
 import { useSelector } from 'react-redux'
-import { RootState } from '../type'
+import { RootState } from '../interface'
 
 type Props = {
     setOpenSideBar: React.Dispatch<SetStateAction<boolean>>,

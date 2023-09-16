@@ -1,7 +1,6 @@
 import React, { SetStateAction } from 'react'
 import useDrag from '../hooks/useDrag'
 import { useSelector } from 'react-redux';
-import { DataUser } from '../slice/userSlice';
 import CardRoutine from './CardRoutine';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -9,10 +8,10 @@ import { faSquareCheck as faSquare } from '@fortawesome/free-regular-svg-icons';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import SpinnerComponent from './SpinnerComponent';
+import { RootState } from '../interface';
+import { Droppable, Draggable } from '@hello-pangea/dnd'
 
-interface RootState {
-    user: DataUser
-}
+
 
 type Props = {
     dayActive: string,
@@ -21,12 +20,11 @@ type Props = {
 
 const ExercisesToDo = ({ dayActive, setOpenSideBar }: Props) => {
     const userState = useSelector((state: RootState) => state.user);
-    const { routine, loading } = userState;
-    const { startDrag, onDrop, draggingOver } = useDrag(dayActive)
+    const { routine, isLoading } = userState;
 
     return (
         <>
-            <div className='flex justify-between'>
+            <div className='flex justify-between px-10'>
                 <h2 className='text-sky-600  text-4xl font-semibold mb-20 '>
                     Exercises to do
                     <FontAwesomeIcon className='mx-4' icon={faSquare} />
@@ -37,48 +35,69 @@ const ExercisesToDo = ({ dayActive, setOpenSideBar }: Props) => {
                     </button>
                 </Link>
             </div>
-
-            <div
-                onDragOver={(evt => draggingOver(evt))}
-                onDrop={(evt => onDrop(evt))}
-                className='grid p-10 gap-2 min-h-[200px] sm:grid-col-2   md:grid-cols-4 shadow-sm max-w-7xl bg-gray-200 bg-opacity-30'>
-
+            <Droppable direction='horizontal' droppableId='toDo'>
                 {
-                    loading && <SpinnerComponent styles='border-4 border-blue-400 animate-spin w-6 h-8 rounded-full mx-auto' />
-                }
-                {routine &&
-                    routine
-                        .filter(item => item.day === dayActive)
-                        .map(item => item.exersiceItem)
-                        .filter(item => item.length > 0)
-                        .map(item =>
-                            item
-                                .filter(exercise => !exercise.complete) // Filtrar solo si complete es false
-                                .map(exercise => (
-                                    <CardRoutine
-                                        dragStart={startDrag}
-                                        setOpenSideBar={setOpenSideBar}
-                                        dayActive={dayActive}
-                                        key={exercise.id}
-                                        exerciseData={exercise}
-                                    />
-                                ))
-                        )
-                }
-                {
-                    routine && 
-                    (routine.filter(item => item.day === dayActive).length === 0
-                    ||
-                    routine.filter(item => item.day === dayActive).every(item => item.exersiceItem.length === 0)) && (
-                    <div className='flex flex-col my-6 items-center w-full col-span-full'>
-                        <p className='text-4xl text-center text-primary'>There are no exercises on this day.</p>
+                    (provide) => (
+                        <div
+                            {...provide.droppableProps}
+                            ref={provide.innerRef}
+                            className='grid p-10  gap-2 min-h-[200px] sm:grid-col-2 justify-center md:grid-cols-4 shadow-sm max-w-7xl bg-gray-200 bg-opacity-30'>
 
-                    </div>
-                )
+                            {
+                                isLoading && <SpinnerComponent styles='border-4 border-blue-400 animate-spin w-6 h-8 rounded-full mx-auto' />
+                            }
+                            {routine &&
+                                routine
+                                    .filter(item => item.day === dayActive)
+                                    .map(item => item.exersiceItem)
+                                    .filter(item => item.length > 0)
+                                    .map(item =>
+                                        item
+                                            .filter(exercise => !exercise.complete) // Filtrar solo si complete es false
+                                            .map((exercise,index) => (
+                                                <Draggable
+                                                    index={index}
+                                                    key={exercise.id}
+                                                    draggableId={exercise.id.toString()}
+                                                >
+                                                    {
+                                                        (provide) => (
+                                                            <div
+                                                                {...provide.draggableProps}
+                                                                {...provide.dragHandleProps}
+                                                                ref={provide.innerRef}
+                                                            >
+                                                                <CardRoutine
+                                                                    // dragStart={startDrag}
+                                                                    setOpenSideBar={setOpenSideBar}
+                                                                    dayActive={dayActive}
+                                                                    key={exercise.id}
+                                                                    exerciseData={exercise}
+                                                                />
+                                                            </div>
+                                                        )
+                                                    }
+                                                </Draggable>
+                                            ))
+                                    )
+                            }
+                            {
+                                (routine && routine.length > 0) &&
+                                (routine.filter(item => item.day === dayActive).length === 0
+                                    ||
+                                    routine.filter(item => item.day === dayActive).every(item => item.exersiceItem.length === 0)) && (
+                                    <div className='flex flex-col my-6 items-center w-full col-span-full'>
+                                        <p className='text-4xl text-center text-primary'>There are no exercises on this day.</p>
+
+                                    </div>
+                                )
+                            }
+
+                            {provide.placeholder}
+                        </div>
+                    )
                 }
-
-
-            </div>
+            </Droppable>
 
         </>
     )

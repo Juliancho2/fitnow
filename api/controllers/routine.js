@@ -37,7 +37,7 @@ routineRouter.post('/',useValidate, userExtractor, async (req, res) => {
   
         existingRoutine.exersiceItem.push(exersiceItem);
         await existingRoutine.save();
-        res.json(existingRoutine);
+        return res.json(existingRoutine);
       } else {
         const newRoutine = new Routine({
           user,
@@ -48,7 +48,7 @@ routineRouter.post('/',useValidate, userExtractor, async (req, res) => {
         const saveRoutine = await newRoutine.save();
         user.routine= user.routine.concat(saveRoutine._id);
         await user.save();
-        res.json(saveRoutine);
+        return res.json(saveRoutine);
       }
     } catch (error) {
       res.status(500).json({ message: "An error occurred", error: error.message });
@@ -57,10 +57,12 @@ routineRouter.post('/',useValidate, userExtractor, async (req, res) => {
 
 routineRouter.delete('/:id/:name', userExtractor, async (req, res) => {
     const { id, name } = req.params;
-
+    const userId = req.userId; // Se asume que req.userId contiene el ID del usuario
+  
+      const user = await User.findById(userId);
     try {
         // Buscar la rutina por el nombre del día (name)
-        const routine = await Routine.findOne({ day: name });
+        const routine = await Routine.findOne({ day: name,user });
 
         if (!routine) {
             // Si no se encuentra la rutina, devolver un error 404
@@ -69,7 +71,6 @@ routineRouter.delete('/:id/:name', userExtractor, async (req, res) => {
 
         // Filtrar los elementos de exersiceItem para eliminar el ejercicio por ID
         routine.exersiceItem = routine.exersiceItem.filter(item => item.id !== id);
-
         // Guardar la rutina actualizada en la base de datos
         await routine.save();
 

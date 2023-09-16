@@ -12,7 +12,7 @@ loginRouter.post('/', async (req, res) => {
 
     if (!(user && passwordCorrect)) {
         return res.status(401).json({
-            error: "Invalid user of password"
+            message: "Invalid user of password"
         })
     }
     const userForToken = {

@@ -1,6 +1,11 @@
 import React from 'react';
+import BtnAction from './BtnAction';
+import { useDispatch } from 'react-redux';
+import { setActive } from '../redux/slice/modalSlice';
 
 const Started = () => {
+  const dispath=useDispatch()
+
   return (
     <section  className="bg-started relative bg-center bg-cover bg-blur-xl h-[40vh] ">
       <div className="absolute  z-10 bg-opacity-70 h-full w-full bg-black"></div>
@@ -10,9 +15,7 @@ const Started = () => {
 
       <div className="flex flex-col justify-center items-center w-full h-full  max-w-screen-xl mx-auto px-4">
         <h3 className="text-3xl font-bold text-white z-20">Get started</h3>
-        <button className="bg-[#11E0F8] px-2 z-20 border-none rounded-md text-white w-40  font-bold mt-3  hover:opacity-70 transition-all duration-500 ease-in-out cursor-pointer py-3 text-xl">
-          Start To Free
-        </button>
+        <BtnAction  onClick={()=>dispath(setActive('signup'))}>Start To Free</BtnAction>
       </div>
     </section>
   );

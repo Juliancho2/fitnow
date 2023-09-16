@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { daysOfWeek } from '../static'
 import { useDispatch, useSelector } from 'react-redux'
-import { desactiveAddExerciseModal } from '../slice/dataExerciseSlice'
-import { RootState } from '../type'
-import { addRoutine } from '../thunk'
+import { desactiveAddExerciseModal } from '../redux/slice/dataExerciseSlice'
+import { RootState } from '../interface'
+import { addRoutine } from '../redux/thunk'
 import Swal from 'sweetalert2'
-import { setError } from '../slice/userSlice'
+import { setError } from '../redux/slice/userSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { AppDispatch } from '../redux/store/store'
 
 const initialForm = {
   title: "",
@@ -17,9 +18,9 @@ const initialForm = {
 }
 
 const ModalAddExercise = () => {
-  const { token, error } = useSelector((state: RootState) => state.user)
+  const { token, errorMessage } = useSelector((state: RootState) => state.user)
   const { exerciseToAdd } = useSelector((state: RootState) => state.dataApi)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const [formData, setFormData] = useState(initialForm)
 
@@ -32,9 +33,26 @@ const ModalAddExercise = () => {
     })
   }
 
+  useEffect(() => {
+    if (errorMessage.isError) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: errorMessage.name,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
+    return()=>{
+      
+      dispatch(setError())
+    }
+
+  }, [errorMessage.isError])
 
   const handleClickOutside = () => {
-    dispatch(desactiveModal())
+    dispatch(desactiveAddExerciseModal())
   };
 
   const handleFormClick = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -61,18 +79,17 @@ const ModalAddExercise = () => {
       })
     }
     
-    dispatch(addRoutine({ data, token }));
-
-    if (error) {
+   const res=await dispatch(addRoutine({ data, token }));
+    console.log(res)
+    if (res.payload) {
       Swal.fire({
         position: 'top-end',
-        icon: 'error',
-        title: error,
+        icon: 'success',
+        title: 'Added success',
         showConfirmButton: false,
         timer: 1500
       })
-    } 
-    dispatch(setError())
+    }
 
 
     setFormData(initialForm)
@@ -80,13 +97,14 @@ const ModalAddExercise = () => {
     dispatch(desactiveAddExerciseModal())
   }
 
+
   return (
     <div onClick={handleClickOutside} className='fixed  flex items-center w-full top-0 left-0 min-h-screen z-40 bg-black bg-opacity-10'>
       <div className='w-[420px] h-[250px] mx-auto flex justify-center items-center'>
         <form onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleFormClick(e)} className='relative grid grid-cols-2 border border-gray-300 rounded-md animate-scaleImg  bg-white shadow-md w-full h-full py-6 px-8 gap-3 items-center'>
           <FontAwesomeIcon onClick={()=>handleClickOutside()} className='absolute top-5 right-5 h-6 w-6 text-gray-400' icon={faXmark}/>
           <h2 className='col-span-2 text-center font-semibold text-xl text-primary'>Add exercise: {exerciseToAdd.exerciseItem.name}</h2>
-          <div>
+          {/* <div>
             <label htmlFor="" >Add a title</label>
             <input
               onChange={(e) => handleChange(e)}
@@ -96,7 +114,7 @@ const ModalAddExercise = () => {
               placeholder='Title'
               className=" h-12 w-full rounded-lg border border-gray-300 text-gray-700 sm:text-sm px-4"
             />
-          </div>
+          </div> */}
           <div>
             <label htmlFor="" >Day*</label>
             <select

@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import HomePage from './page/HomePage'
 import DashboardPage from './page/DashboardPage'
 import { ProtectRoutes } from './components/ProtectRoutes'
@@ -11,7 +11,6 @@ import { RootState } from './interface'
 import ExercisesPage from './page/ExercisesPage'
 import CalculatorPage from './page/CalculatorPage'
 import ExerciseFoundsPage from './page/ExerciseFoundsPage'
-import DetailExercise from './page/DetailExercise'
 import NotFound from './components/NotFound'
 import { AppDispatch } from './redux/store/store'
 import SpinnerComponent from './components/SpinnerComponent'
@@ -23,7 +22,8 @@ function App() {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser');
     if (loggedUserJSON) {
-      dispatch(setUser(JSON.parse(loggedUserJSON))); // Establece isLogged como true después de cargar el estado de autenticación
+      dispatch(setUser(JSON.parse(loggedUserJSON))); 
+      // Establece isLogged como true después de cargar el estado de autenticación
       
     }else {
       dispatch(setLogged(false))
@@ -52,9 +52,6 @@ function App() {
         </Route>
         <Route element={<ProtectRoutes isAllowed={!!isLogged} redirectTo={'/dashboard'} />}>
           <Route path='/dashboard/search/:target' element={<ExerciseFoundsPage />} />
-        </Route>
-        <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
-          <Route path='/dashboard/detail/:id' element={<DetailExercise />} />
         </Route>
         <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
           <Route path='/dashboard/calculator' element={<CalculatorPage />} />

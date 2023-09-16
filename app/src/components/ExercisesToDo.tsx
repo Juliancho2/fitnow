@@ -1,12 +1,10 @@
 import React, { SetStateAction } from 'react'
-import useDrag from '../hooks/useDrag'
 import { useSelector } from 'react-redux';
 import CardRoutine from './CardRoutine';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import { faSquareCheck as faSquare } from '@fortawesome/free-regular-svg-icons';
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import SpinnerComponent from './SpinnerComponent';
 import { RootState } from '../interface';
 import { Droppable, Draggable } from '@hello-pangea/dnd'
@@ -27,7 +25,7 @@ const ExercisesToDo = ({ dayActive, setOpenSideBar }: Props) => {
             <div className='flex justify-between px-10'>
                 <h2 className='text-sky-600  text-4xl font-semibold mb-20 '>
                     Exercises to do
-                    <FontAwesomeIcon className='mx-4' icon={faSquare} />
+                    <FontAwesomeIcon className='mx-4' icon={faListCheck} />
                 </h2>
                 <Link to={'/dashboard/search'} >
                     <button className='h-20 w-20 rounded-lg border-2 border-gray-300 hover:border-gray-500 hover:text-gray-700'>

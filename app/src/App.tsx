@@ -4,32 +4,36 @@ import HomePage from './page/HomePage'
 import DashboardPage from './page/DashboardPage'
 import { ProtectRoutes } from './components/ProtectRoutes'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { AppDispatch } from './store/store'
-import { setUser } from './slice/userSlice'
+import {  useEffect } from 'react'
+import { setLogged, setUser } from './redux/slice/userSlice'
 import RoutinePage from './page/RoutinePage'
-import { RootState } from './type'
+import { RootState } from './interface'
 import ExercisesPage from './page/ExercisesPage'
 import CalculatorPage from './page/CalculatorPage'
 import ExerciseFoundsPage from './page/ExerciseFoundsPage'
 import DetailExercise from './page/DetailExercise'
 import NotFound from './components/NotFound'
+import { AppDispatch } from './redux/store/store'
+import SpinnerComponent from './components/SpinnerComponent'
 
 function App() {
-  const userState = useSelector((state: RootState) => state.user)
-  const { isLogged } = userState;
+  const {isLogged} = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser');
     if (loggedUserJSON) {
-      // const loggedUserParse = JSON.parse(loggedUserJSON);
+      dispatch(setUser(JSON.parse(loggedUserJSON))); // Establece isLogged como true después de cargar el estado de autenticación
+      
+    }else {
+      dispatch(setLogged(false))
+    } 
+  }, [isLogged])
 
-      dispatch(setUser(JSON.parse(loggedUserJSON)));
-      // navigate('/dashboard');
-    }
-  }, [])
+  if (isLogged === null) {
+    // Si isLogged es null, puedes mostrar un indicador de carga o lo que consideres apropiado
+    return <SpinnerComponent styles='border-4 border-white animate-spin w-6 h-8 rounded-full mx-auto' />;
+  }
 
 
   return (
@@ -38,7 +42,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
 
         <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
-          <Route path='/dashboard/' element={<DashboardPage />} />
+          <Route path='/dashboard' element={<DashboardPage />} />
         </Route>
         <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
           <Route path='/dashboard/routine' element={<RoutinePage />} />

@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
 
-const Clock = () => {
-  const [hora, setHora] = useState(new Date());
+const Clock: React.FC = () => {
+  const [hour, setHour] = useState(new Date());
 
   useEffect(() => {
-    const intervalo = setInterval(() => {
-      setHora(new Date());
+    const interval = setInterval(() => {
+      setHour(new Date());
     }, 1000);
 
     return () => {
-      clearInterval(intervalo);
+      clearInterval(interval);
     };
   }, []);
 
-  const formatoDeHora = {
+  const formHour: Intl.DateTimeFormatOptions = {
     hour: 'numeric',
-    minute: 'numeric'
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false, 
   };
 
-  const formatoDeFecha = {
+  const formDate: Intl.DateTimeFormatOptions = {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
@@ -27,13 +29,21 @@ const Clock = () => {
 
   return (
     <div className="text-center">
-      <div className="text-4xl mb-2">{hora.toLocaleTimeString(undefined, formatoDeHora)}</div>
-      <div className="text-xl">{hora.toLocaleDateString(undefined, formatoDeFecha)}</div>
+      <div className="text-4xl mb-2">
+        {hour.toLocaleTimeString('es-ES', formHour)}
+      </div>
+      <div className="text-xl">
+        {hour.toLocaleDateString('es-ES', formDate)}
+      </div>
     </div>
   );
 };
 
 export default Clock;
+
+
+
+
 
 
 

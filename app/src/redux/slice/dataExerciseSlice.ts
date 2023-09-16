@@ -3,10 +3,6 @@ import { fetchExerciseDbApi } from '../thunk/index'
 import { DataFromApi } from "../../interface";
 export type DataFromApiMuscles = Array<string>
 
-// export type Error = {
-//     name:string,
-//     isError:boolean
-// }
 
 const initialExerciseToAdd = {
     modalActive: false,
@@ -18,8 +14,8 @@ const initialExerciseToAdd = {
         id: "",
         equipment: "",
         complete: false,
-        serial: 0,
-        repeat: 0,
+        serial: "",
+        repeat: "",
         title: ""
     }
 }

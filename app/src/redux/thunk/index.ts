@@ -125,7 +125,7 @@ export const fetchExerciseDbApi = createAsyncThunk(
             const res = await fetch(url, options);
             const json = await res.json();
 
-            dispatch(setDataSearch(exampleCard));
+            dispatch(setDataSearch(json));
         } catch (error) {
             rejectWithValue(error);
         }

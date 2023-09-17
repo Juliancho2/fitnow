@@ -112,18 +112,18 @@ export const fetchExerciseDbApi = createAsyncThunk(
     async (data: {name:string}, { dispatch, rejectWithValue }) => {
 
         try {
-            // const url = `${import.meta.env.VITE_URL_API_EXERCISE}target/${data.name}`;
+            const url = `${URL}target/${data.name}`;
 
-            // const options = {
-            //     method: 'GET',
-            //     headers: {
-            //         'X-RapidAPI-Key':import.meta.env.VITE_API_KEY_EXERCISE_DB,
-            //         'X-RapidAPI-Host': import.meta.env.VITE_API_HOST_EXERCISE_DB
-            //       }
-            // };
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key':import.meta.env.VITE_API_KEY_EXERCISE_DB,
+                    'X-RapidAPI-Host': import.meta.env.VITE_API_HOST_EXERCISE_DB
+                  }
+            };
 
-            // const res = await fetch(url, options);
-            // const json = await res.json();
+            const res = await fetch(url, options);
+            const json = await res.json();
 
             dispatch(setDataSearch(exampleCard));
         } catch (error) {
@@ -138,7 +138,7 @@ export const fetchBodyTarget = createAsyncThunk(
     async (data,{ dispatch }) => {
 
         try {
-            const url = `${import.meta.env.VITE_URL_LOCALHOST}/body`;
+            const url = `${URL}/body`;
 
             const options = {
                 method: 'GET'

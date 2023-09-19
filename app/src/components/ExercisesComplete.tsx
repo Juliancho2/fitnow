@@ -21,7 +21,7 @@ const ExercisesComplete = ({ dayActive, setOpenSideBar }: Props) => {
 
     return (
         <>
-            <h2 className='text-sky-600  text-4xl font-semibold my-20 '>
+            <h2 className='text-sky-600  text-4xl font-semibold my-20 px-10'>
                 Complete
                 <FontAwesomeIcon className='mx-4' icon={faSquareCheck} />
             </h2>

@@ -51,7 +51,7 @@ function App() {
           <Route path='/dashboard/search' element={<ExercisesPage />} />
         </Route>
         <Route element={<ProtectRoutes isAllowed={!!isLogged} redirectTo={'/dashboard'} />}>
-          <Route path='/dashboard/search/:target' element={<ExerciseFoundsPage />} />
+          <Route path='/dashboard/search/:name' element={<ExerciseFoundsPage />} />
         </Route>
         <Route element={<ProtectRoutes isAllowed={!!isLogged} />}>
           <Route path='/dashboard/calculator' element={<CalculatorPage />} />

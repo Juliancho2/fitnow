@@ -109,10 +109,13 @@ export const bmiCalculator = createAsyncThunk(
 
 export const fetchExerciseDbApi = createAsyncThunk(
     'dataExercise/fetchExerciseDbApi',
-    async (data: {name:string}, { dispatch, rejectWithValue }) => {
-
+    async (data: {name:string | undefined}, { dispatch, rejectWithValue }) => {
+        const URLAPI=import.meta.env.VITE_URL_API_EXERCISE
         try {
-            const url = `${URL}target/${data.name}`;
+            if(!data.name){
+                throw new Error('Parameter not defined')
+            }
+            const url = `${URLAPI}target/${data.name}`;
 
             const options = {
                 method: 'GET',

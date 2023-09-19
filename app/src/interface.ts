@@ -1,12 +1,45 @@
-import { AddOptionData } from "./redux/slice/bmiCalculator";
+import React from 'react'
+import { AddOptionData } from './redux/slice/bmiCalculator'
 
-/*-----------interface login--------*/
+/* -----------interface Data from api-------- */
+
+export interface DataFromApiExercise{
+    bodyPart:string,
+    equipment:string,
+    gifUrl:string,
+    id:string,
+    target:string,
+    name:string,
+    complete:boolean,
+    serial:string,
+    repeat:string,
+    title:string
+}
+interface ErrorUser {
+    name:string,
+    isError:boolean
+}
+
+interface exerciseToAdd {
+    modalActive: boolean;
+    exerciseItem: DataFromApiExercise
+}
+
+export interface DataFromApi {
+    dataSearch: Array<DataFromApiExercise>,
+    exerciseToAdd: exerciseToAdd,
+    exerciseSideBar: exerciseToAdd,
+    isLoading: boolean,
+    errorMessage: ErrorUser,
+}
+
+/* -----------interface login-------- */
 export interface FormLogin {
     username: string;
     password: string;
 }
 
-/*-----------interface register--------*/
+/* -----------interface register-------- */
 
 export interface FormValues {
     username: string,
@@ -29,11 +62,7 @@ export interface UseFormReturn {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
-/*-----------interface DataUser--------*/
-interface ErrorUser  {
-    name:string,
-    isError:boolean
-}
+/* -----------interface DataUser-------- */
 
 export interface Routine {
     id?: string;
@@ -51,7 +80,7 @@ export interface DataUser {
     isLoading: boolean,
     errorMessage: ErrorUser,
     routine: Array<Routine>
-};
+}
 
 interface BodyTarget{
     isLoading:string,
@@ -72,31 +101,4 @@ export interface ModalInterface{
         mode:string
     },
 
-}
-
-/*-----------interface Data from api--------*/
-
-export interface DataFromApiExercise{
-    bodyPart:string,
-    equipment:string,
-    gifUrl:string,
-    id:string,
-    target:string,
-    name:string,
-    complete:boolean,
-    serial:string,
-    repeat:string,
-    title:string
-}
-interface exerciseToAdd {
-    modalActive: boolean;
-    exerciseItem: DataFromApiExercise
-}
-
-export interface DataFromApi {
-    dataSearch: Array<DataFromApiExercise>,
-    exerciseToAdd: exerciseToAdd,
-    exerciseSideBar: exerciseToAdd,
-    isLoading: boolean,
-    errorMessage: ErrorUser,
 }

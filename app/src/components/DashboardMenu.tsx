@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const routes = [
-  { img: "routine.svg", label: "My routine", path: "/dashboard/routine", id: 0 },
-  { img: "calculatorc.svg", label: "Bmi calculator", path: "/dashboard/calculator", id: 1 },
-  { img: "exercise.svg", label: "Search exercise", path: "/dashboard/search", id: 2 },
+  { img: 'routine.svg', label: 'My routine', path: '/dashboard/routine', id: 0 },
+  { img: 'calculatorc.svg', label: 'Bmi calculator', path: '/dashboard/calculator', id: 1 },
+  { img: 'exercise.svg', label: 'Search exercise', path: '/dashboard/search', id: 2 }
 ]
 
 const DashboardMenu = () => {

@@ -1,78 +1,77 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, {  useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setClose } from '../redux/slice/modalSlice';
-import { ErrorsForm, FormValues, RootState } from '../interface';
-import { faEye, faEyeSlash, faLock, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
-import MessageErrorValidate from './MessageErrorValidate';
-import { useForm } from '../hooks/useForm';
-import Swal from 'sweetalert2';
-import { setError } from '../redux/slice/userSlice';
-import SpinnerComponent from './SpinnerComponent';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { setClose } from '../redux/slice/modalSlice'
+import { ErrorsForm, FormValues, RootState } from '../interface'
+import { faEye, faEyeSlash, faLock, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
+import MessageErrorValidate from './MessageErrorValidate'
+import { useForm } from '../hooks/useForm'
+import Swal from 'sweetalert2'
+import { setError } from '../redux/slice/userSlice'
+import SpinnerComponent from './SpinnerComponent'
 
 const initialForm: FormValues = {
-    username: "",
-    password: "",
-    confirmPassword: ""
+  username: '',
+  password: '',
+  confirmPassword: ''
 }
 
 const validateForm = (form: FormValues) => {
-    const errors: ErrorsForm = {};
+  const errors: ErrorsForm = {}
 
-    let regexusername = /^[a-zA-Z0-9._-]{3,15}$/
-    let regexPassword = /^.{4,}$/
+  const regexusername = /^[a-zA-Z0-9._-]{3,15}$/
+  const regexPassword = /^.{4,}$/
 
-    if (!form.username.trim()) {
-        errors.username = "The field username is required";
-    } else if (!regexusername.test(form.username.trim())) {
-        errors.username = "Username is invalided"
-    }
-    if (!form.password.trim()) {
-        errors.password = "The field password is required";
-    } else if (!regexPassword.test(form.password.trim())) {
-        errors.password = "Password is invalided"
-    }
-    if (!form.confirmPassword.trim()) {
-        errors.confirmPassword = "The field confirm password is required";
-    } else if (form.password !== form.confirmPassword) errors.confirmPassword = "Passwords do not match"
+  if (!form.username.trim()) {
+    errors.username = 'The field username is required'
+  } else if (!regexusername.test(form.username.trim())) {
+    errors.username = 'Username is invalided'
+  }
+  if (!form.password.trim()) {
+    errors.password = 'The field password is required'
+  } else if (!regexPassword.test(form.password.trim())) {
+    errors.password = 'Password is invalided'
+  }
+  if (!form.confirmPassword.trim()) {
+    errors.confirmPassword = 'The field confirm password is required'
+  } else if (form.password !== form.confirmPassword) errors.confirmPassword = 'Passwords do not match'
 
-    return errors
+  return errors
 }
 type Props = {
     setIsLoggin: (value: React.SetStateAction<boolean>) => void
 }
 
 const SignUp = ({ setIsLoggin }: Props) => {
-    const dispatch = useDispatch();
-    const {
-        form,
-        errors,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-    } = useForm({ initialForm, validateForm });
-    const [showPassword, setShowPassword] = useState(false);
-    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-    const {isLoading,errorMessage}=useSelector((state:RootState)=>state.user)
+  const dispatch = useDispatch()
+  const {
+    form,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit
+  } = useForm({ initialForm, validateForm })
+  const [showPassword, setShowPassword] = useState(false)
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
+  const { isLoading, errorMessage } = useSelector((state:RootState) => state.user)
 
-    useEffect(()=>{
-        if(errorMessage.isError){
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: errorMessage.name,
-                showConfirmButton: false,
-                timer: 1500
-              })
-        }
-        return()=>{
-            dispatch(setError())
-        }
-    },[errorMessage.isError])
+  useEffect(() => {
+    if (errorMessage.isError) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: errorMessage.name,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+    return () => {
+      dispatch(setError())
+    }
+  }, [errorMessage.isError])
 
-    return (
+  return (
         <div className="min-h-screen flex items-center justify-center animate-scaleImg">
             <div className="w-[400px]  bg-white shadow-lg rounded-lg p-8 relative">
                 <div>
@@ -111,19 +110,21 @@ const SignUp = ({ setIsLoggin }: Props) => {
                                     onBlur={handleBlur}
                                     className="w-full py-2 px-2 outline-none"
                                 />
-                                {!showPassword ? (
+                                {!showPassword
+                                  ? (
                                     <FontAwesomeIcon
                                         className='text-gray-400'
                                         onClick={() => setShowPassword(true)}
                                         icon={faEyeSlash}
                                     />
-                                ) : (
+                                    )
+                                  : (
                                     <FontAwesomeIcon
                                         className='text-gray-400'
                                         onClick={() => setShowPassword(false)}
                                         icon={faEye}
                                     />
-                                )}
+                                    )}
                             </div>
                         </div>
 
@@ -140,19 +141,21 @@ const SignUp = ({ setIsLoggin }: Props) => {
                                     onBlur={handleBlur}
                                     className="w-full py-2 px-2 outline-none"
                                 />
-                                {!showPasswordConfirm ? (
+                                {!showPasswordConfirm
+                                  ? (
                                     <FontAwesomeIcon
                                         className='text-gray-400'
                                         onClick={() => setShowPasswordConfirm(true)}
                                         icon={faEyeSlash}
                                     />
-                                ) : (
+                                    )
+                                  : (
                                     <FontAwesomeIcon
                                         onClick={() => setShowPasswordConfirm(false)}
                                         className='text-gray-400'
                                         icon={faEye}
                                     />
-                                )}
+                                    )}
                             </div>
                         </div>
 
@@ -174,7 +177,7 @@ const SignUp = ({ setIsLoggin }: Props) => {
                 </div>
             </div>
         </div>
-    );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

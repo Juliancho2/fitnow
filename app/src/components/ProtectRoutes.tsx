@@ -7,11 +7,11 @@ interface Props {
   redirectTo?: string;
 }
 
-export const ProtectRoutes = ({ children, isAllowed, redirectTo = "/" }: Props) => {
+export const ProtectRoutes = ({ children, isAllowed, redirectTo = '/' }: Props) => {
   if (!isAllowed) {
     return <Navigate to={redirectTo} />
   }
   return (
-    children ? children : <Outlet />
+    children || <Outlet />
   )
 }

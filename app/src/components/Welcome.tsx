@@ -4,7 +4,7 @@ import { RootState } from '../interface'
 import Clock from './Clock'
 
 const Welcome = () => {
-    const {username}=useSelector((state:RootState)=>state.user)
+  const { username } = useSelector((state:RootState) => state.user)
 
   return (
     <div className='mx-auto'>

@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../interface";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import { logOut } from "../redux/slice/userSlice";
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../interface'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
+import { logOut } from '../redux/slice/userSlice'
 
 const DropdownMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const {username}=useSelector((state:RootState)=>state.user)
-  const dispatch=useDispatch()
+  const [isOpen, setIsOpen] = useState(false)
+  const { username } = useSelector((state:RootState) => state.user)
+  const dispatch = useDispatch()
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
-  const handleLogOut=()=>{
+  const handleLogOut = () => {
     dispatch(logOut())
   }
 
@@ -48,7 +48,7 @@ const DropdownMenu = () => {
           </Link>
           <Link
             to="#"
-            onClick={()=>handleLogOut()}
+            onClick={() => handleLogOut()}
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-center"
           >
             Logout
@@ -57,12 +57,7 @@ const DropdownMenu = () => {
       </div>
       }
     </div>
-  );
-};
+  )
+}
 
-export default DropdownMenu;
-
-
-
-
-
+export default DropdownMenu

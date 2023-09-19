@@ -11,9 +11,9 @@ type Props = {
 }
 
 const SideBar = ({ setOpenSideBar, openSideBar }: Props) => {
-    const { exerciseSideBar } = useSelector((state: RootState) => state.dataApi)
+  const { exerciseSideBar } = useSelector((state: RootState) => state.dataApi)
 
-    return (
+  return (
         <div className={`fixed px-10 flex flex-col top-0 h-full w-full md:w-[600px] right-0 bg-white shadow-sm border border-gray-300 z-20 pt-40 ${openSideBar ? 'animate-sideBar' : 'animate-closeSideBar'} `}>
             <div className='w-full flex justify-end'>
                 <FontAwesomeIcon onClick={() => setOpenSideBar(false)} className='text-2xl text-gray-600 cursor-pointer' icon={faXmark} />
@@ -33,7 +33,6 @@ const SideBar = ({ setOpenSideBar, openSideBar }: Props) => {
                             <p className='text-xl font-semibold'><strong className='text-2xl text-sky-600 mr-3'>Repetitions:</strong> {exerciseSideBar.exerciseItem.repeat}</p>
                             <div>
 
-
                                 <p><p className='text-xl font-semibold'><strong className='text-2xl text-sky-600'>Equipment:</strong> {exerciseSideBar.exerciseItem.equipment}</p></p>
                             </div>
                         </div>
@@ -41,7 +40,7 @@ const SideBar = ({ setOpenSideBar, openSideBar }: Props) => {
                 </section>
             </div>
         </div>
-    )
+  )
 }
 
 export default SideBar

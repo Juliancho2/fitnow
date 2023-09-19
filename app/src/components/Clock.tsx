@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 const Clock: React.FC = () => {
-  const [hour, setHour] = useState(new Date());
+  const [hour, setHour] = useState(new Date())
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setHour(new Date());
-    }, 1000);
+      setHour(new Date())
+    }, 1000)
 
     return () => {
-      clearInterval(interval);
-    };
-  }, []);
+      clearInterval(interval)
+    }
+  }, [])
 
   const formHour: Intl.DateTimeFormatOptions = {
     hour: 'numeric',
     minute: 'numeric',
     second: 'numeric',
-    hour12: false, 
-  };
+    hour12: false
+  }
 
   const formDate: Intl.DateTimeFormatOptions = {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
-    day: 'numeric',
-  };
+    day: 'numeric'
+  }
 
   return (
     <div className="text-center">
@@ -36,17 +36,7 @@ const Clock: React.FC = () => {
         {hour.toLocaleDateString('es-ES', formDate)}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Clock;
-
-
-
-
-
-
-
-
-
-
+export default Clock

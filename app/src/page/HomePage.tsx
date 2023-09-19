@@ -1,20 +1,18 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import HeaderApp from '../components/HeaderApp';
-import FooterApp from '../components/FooterApp';
-import { features } from '../static';
-import Started from '../components/Started';
-import BmiCalculator from '../components/BmiCalculator';
-import hero from '/hero.svg';
-import ModalAuth from '../components/ModalAuth';
-import { ModalInterface } from '../interface';
-import BtnAction from '../components/BtnAction';
-import { setActive } from '../redux/slice/modalSlice';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import HeaderApp from '../components/HeaderApp'
+import FooterApp from '../components/FooterApp'
+import { features } from '../static'
+import Started from '../components/Started'
+import BmiCalculator from '../components/BmiCalculator'
+import ModalAuth from '../components/ModalAuth'
+import { ModalInterface } from '../interface'
+import BtnAction from '../components/BtnAction'
+import { setActive } from '../redux/slice/modalSlice'
 
 const HomePage = () => {
-  const { isActive, mode } = useSelector((state: ModalInterface) => state.modal);
-  const dispath=useDispatch()
+  const { isActive, mode } = useSelector((state: ModalInterface) => state.modal)
+  const dispath = useDispatch()
   return (
     <div className="min-h-screen w-full animate-loadedPage">
       {isActive && <ModalAuth mode={mode} />}
@@ -30,8 +28,8 @@ const HomePage = () => {
           <p className="font-semibold text-2xl text-gray-500 z-2 mb-20 relative z-10 text-center">
             Discover Your Ideal Fitness Journey: Tailor-Made Workouts, Personalized Results
           </p>
-         <BtnAction onClick={()=>dispath(setActive('signup'))} >Start To Free</BtnAction>
-          <img src={hero} alt="" className="w-[450px] mt-[40px]" />
+         <BtnAction onClick={() => dispath(setActive('signup'))} >Start To Free</BtnAction>
+          <img src={'hero.svg'} alt="" className="w-[450px] mt-[40px]" />
         </div>
         <div className=" flex flex-col justify-center space-y-40 w-full max-w-[1300px] mx-auto min-h-[80vh] px-10 md:px-[80px] pb-[80px]">
           {features.map((feature) => (
@@ -62,7 +60,7 @@ const HomePage = () => {
       </main>
       <FooterApp />
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

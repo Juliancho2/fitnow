@@ -1,15 +1,13 @@
 import React, { SetStateAction } from 'react'
-import { useSelector } from 'react-redux';
-import CardRoutine from './CardRoutine';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux'
+import CardRoutine from './CardRoutine'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
 
-import { faPlus, faListCheck } from '@fortawesome/free-solid-svg-icons';
-import SpinnerComponent from './SpinnerComponent';
-import { RootState } from '../interface';
+import { faPlus, faListCheck } from '@fortawesome/free-solid-svg-icons'
+import SpinnerComponent from './SpinnerComponent'
+import { RootState } from '../interface'
 import { Droppable, Draggable } from '@hello-pangea/dnd'
-
-
 
 type Props = {
     dayActive: string,
@@ -17,10 +15,10 @@ type Props = {
 }
 
 const ExercisesToDo = ({ dayActive, setOpenSideBar }: Props) => {
-    const userState = useSelector((state: RootState) => state.user);
-    const { routine, isLoading } = userState;
+  const userState = useSelector((state: RootState) => state.user)
+  const { routine, isLoading } = userState
 
-    return (
+  return (
         <>
             <div className='flex justify-between px-10'>
                 <h2 className='text-sky-600  text-4xl font-semibold mb-20 '>
@@ -46,13 +44,13 @@ const ExercisesToDo = ({ dayActive, setOpenSideBar }: Props) => {
                             }
                             {routine &&
                                 routine
-                                    .filter(item => item.day === dayActive)
-                                    .map(item => item.exersiceItem)
-                                    .filter(item => item.length > 0)
-                                    .map(item =>
-                                        item
-                                            .filter(exercise => !exercise.complete) // Filtrar solo si complete es false
-                                            .map((exercise,index) => (
+                                  .filter(item => item.day === dayActive)
+                                  .map(item => item.exersiceItem)
+                                  .filter(item => item.length > 0)
+                                  .map(item =>
+                                    item
+                                      .filter(exercise => !exercise.complete) // Filtrar solo si complete es false
+                                      .map((exercise, index) => (
                                                 <Draggable
                                                     index={index}
                                                     key={exercise.id}
@@ -76,13 +74,12 @@ const ExercisesToDo = ({ dayActive, setOpenSideBar }: Props) => {
                                                         )
                                                     }
                                                 </Draggable>
-                                            ))
-                                    )
+                                      ))
+                                  )
                             }
                             {
                                 (routine && routine.length > 0) &&
-                                (routine.filter(item => item.day === dayActive).length === 0
-                                    ||
+                                (routine.filter(item => item.day === dayActive).length === 0 ||
                                     routine.filter(item => item.day === dayActive).every(item => item.exersiceItem.length === 0)) && (
                                     <div className='flex flex-col my-6 items-center w-full col-span-full'>
                                         <p className='text-4xl text-center text-primary'>There are no exercises on this day.</p>
@@ -98,7 +95,7 @@ const ExercisesToDo = ({ dayActive, setOpenSideBar }: Props) => {
             </Droppable>
 
         </>
-    )
+  )
 }
 
 export default ExercisesToDo

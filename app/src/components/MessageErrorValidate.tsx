@@ -5,13 +5,13 @@ interface Props {
 }
 
 const MessageErrorValidate = ({ message = [] }: Props) => {
-    return (
+  return (
         <div className='  text-center'>
             {
                 message.map((message, index) => (<p className='text-red-500' key={index}>* {message}</p>))
             }
         </div>
-    )
+  )
 }
 
 export default MessageErrorValidate

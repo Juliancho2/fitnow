@@ -1,13 +1,12 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import HeaderApp from '../components/HeaderApp'
 import RoutineExercise from '../components/RoutineExercise'
 import Days from '../components/Days'
 
 const RoutinePage = () => {
-    const [day, setDay] = useState("monday")
+  const [day, setDay] = useState('monday')
 
-
-    return (
+  return (
         <div className='animate-loadPage min-h-screen relative'>
             <HeaderApp />
             <div className='absolute opacity-5'>
@@ -16,7 +15,7 @@ const RoutinePage = () => {
             <Days day={day} setDay={setDay} />
             <RoutineExercise dayActive={day} />
         </div>
-    )
+  )
 }
 
 export default RoutinePage

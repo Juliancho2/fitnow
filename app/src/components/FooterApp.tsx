@@ -1,8 +1,8 @@
-import React from 'react';
-import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
 
 const FooterApp = () => {
   return (
@@ -29,14 +29,14 @@ const FooterApp = () => {
           </div>
           <div className=" text-end">
             <p className="text-sm font-bold text-gray-700 my-6">
-              Made by 👽 <a href="https://www.twitter.com/julianchoms" target="_blank" className="text-blue-500 font-normal">@julianchoms</a>
+              Made by 👽 <a href="https://www.twitter.com/julianchoms" target="_blank" className="text-blue-500 font-normal" rel="noreferrer">@julianchoms</a>
             </p>
           </div>
         </div>
         <p className="text-sm text-center text-gray-700 col-span-2">© 2023 All rights reserved.</p>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default FooterApp;
+export default FooterApp

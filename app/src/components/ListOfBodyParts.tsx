@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { RootState } from '../interface'
 import SpinnerComponent from './SpinnerComponent'
 import BtnAction from './BtnAction'
@@ -13,10 +12,9 @@ interface Props {
     data: BodyParts[]
 }
 
-
 const ListOfBodyParts = ({ data }: Props) => {
-    const { bodyItems, isLoading, errorMessage } = useSelector((state: RootState) => state.bodyTarget)
-    return (
+  const { bodyItems, isLoading, errorMessage } = useSelector((state: RootState) => state.bodyTarget)
+  return (
         <div className='pt-32 pb-20 max-w-screen-xl mx-auto relative z-10 px-10' >
             {
                 (isLoading && bodyItems.length === 0) && <SpinnerComponent styles='border-4 border-sky-600 animate-spin w-6 h-8 rounded-full mx-auto' />
@@ -36,7 +34,6 @@ const ListOfBodyParts = ({ data }: Props) => {
                                     <div className='h-full  flex flex-col gap-4 justify-center p-8'>
                                         <h4 className='text-primary font-bold text-2xl'>{item.name}</h4>
                                         <p className='text-gray-400 font-semibold'>{item.description}</p>
-                                        {/* <Link to={'/dashboard/search/' + item.name} className='bg-btn w-44 text-center text-white py-2 rounded-sm hover:opacity-50 transition-all duration-200'>Search</Link> */}
                                         <BtnAction path={'/dashboard/search/' + item.name}>Search</BtnAction>
                                     </div>
                                 </div>
@@ -46,7 +43,7 @@ const ListOfBodyParts = ({ data }: Props) => {
                 </>
             }
         </div >
-    )
+  )
 }
 
 export default ListOfBodyParts

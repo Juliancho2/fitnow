@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const NotFound = () => {
-    return (
+  return (
         <div className="grid h-screen px-4 bg-white place-content-center">
             <div className="text-center">
                 <h1 className="font-black text-gray-200 text-9xl">404</h1>
@@ -11,7 +11,7 @@ const NotFound = () => {
                     Uh-oh!
                 </p>
 
-                <p className="mt-4 text-gray-500">We can't find that page.</p>
+                <p className="mt-4 text-gray-500">We can`t find that page.</p>
 
                 <Link
                     to="/"
@@ -21,7 +21,7 @@ const NotFound = () => {
                 </Link>
             </div>
         </div>
-    )
+  )
 }
 
 export default NotFound

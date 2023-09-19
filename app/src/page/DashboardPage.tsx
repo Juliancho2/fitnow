@@ -1,11 +1,10 @@
 import React from 'react'
 import HeaderApp from '../components/HeaderApp'
-import Welcome from '../components/Welcome';
-import DashboardMenu from '../components/DashboardMenu';
-
+import Welcome from '../components/Welcome'
+import DashboardMenu from '../components/DashboardMenu'
 
 const DashboarsPage = () => {
-    return (
+  return (
         <div className=' animate-loadPage min-h-[100vh] relative'>
             <HeaderApp />
             <div className='absolute opacity-5'>
@@ -16,7 +15,7 @@ const DashboarsPage = () => {
                     <DashboardMenu />
             </div>
         </div >
-    )
-};
+  )
+}
 
-export default DashboarsPage;
+export default DashboarsPage

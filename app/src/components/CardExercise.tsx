@@ -12,7 +12,7 @@ type Props = {
 const CardExercise = ({ exerciseData }: Props) => {
   const dispatch = useDispatch()
 
-  const [gifUrl, setGifUrl] = useState("")
+  const [gifUrl, setGifUrl] = useState('')
 
   return (
     <>
@@ -21,14 +21,14 @@ const CardExercise = ({ exerciseData }: Props) => {
         (
           <div className='animate-scaleImg fixed top-0 left-0 w-full h-full flex justify-center items-center z-40'>
             <div className='w-[450px] relative z-20    rounded-md shadow-lg overflow-hidden '>
-              <FontAwesomeIcon onClick={() => setGifUrl("")} icon={faXmark} className='absolute top-5 right-5 p-1 bg-gray-200 h-6 w-6 rounded-full cursor-pointer' />
+              <FontAwesomeIcon onClick={() => setGifUrl('')} icon={faXmark} className='absolute top-5 right-5 p-1 bg-gray-200 h-6 w-6 rounded-full cursor-pointer' />
               <img src={gifUrl} alt="" className='w-full' />
             </div>
           </div>
         )
       }
       <div className="block max-w-md p-4 shadow-sm shadow-indigo-100  bg-white">
-        <div  className='cursor-pointer' onClick={() => setGifUrl(exerciseData.gifUrl)}>
+        <div className='cursor-pointer' onClick={() => setGifUrl(exerciseData.gifUrl)}>
           <img
             alt="Home"
             src={exerciseData.gifUrl}
@@ -85,4 +85,3 @@ const CardExercise = ({ exerciseData }: Props) => {
 }
 
 export default CardExercise
-

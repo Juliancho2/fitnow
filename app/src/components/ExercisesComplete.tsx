@@ -1,13 +1,10 @@
 import React, { SetStateAction } from 'react'
-import { useSelector } from 'react-redux';
-import CardRoutine from './CardRoutine';
-import useDrag from '../hooks/useDrag';
-import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RootState } from '../interface';
-import { Draggable, Droppable } from '@hello-pangea/dnd';
-
-
+import { useSelector } from 'react-redux'
+import CardRoutine from './CardRoutine'
+import { faSquareCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { RootState } from '../interface'
+import { Draggable, Droppable } from '@hello-pangea/dnd'
 
 type Props = {
     dayActive: string,
@@ -16,10 +13,10 @@ type Props = {
 }
 
 const ExercisesComplete = ({ dayActive, setOpenSideBar }: Props) => {
-    const userState = useSelector((state: RootState) => state.user);
-    const { routine } = userState;
+  const userState = useSelector((state: RootState) => state.user)
+  const { routine } = userState
 
-    return (
+  return (
         <>
             <h2 className='text-sky-600  text-4xl font-semibold my-20 px-10'>
                 Complete
@@ -40,13 +37,13 @@ const ExercisesComplete = ({ dayActive, setOpenSideBar }: Props) => {
                             {
                                 routine &&
                                 routine
-                                    .filter(item => item.day === dayActive)
-                                    .map(item => item.exersiceItem)
-                                    .filter(item => item.length > 0)
-                                    .map(item =>
-                                        item
-                                            .filter(exercise => exercise.complete)
-                                            .map((exercise, index) => (
+                                  .filter(item => item.day === dayActive)
+                                  .map(item => item.exersiceItem)
+                                  .filter(item => item.length > 0)
+                                  .map(item =>
+                                    item
+                                      .filter(exercise => exercise.complete)
+                                      .map((exercise, index) => (
                                                 <Draggable
                                                     index={index}
                                                     key={exercise.id}
@@ -70,17 +67,17 @@ const ExercisesComplete = ({ dayActive, setOpenSideBar }: Props) => {
                                                         )
                                                     }
                                                 </Draggable>
-                                            ))
-                                    )
+                                      ))
+                                  )
                             }
                             {
                                 (routine) && (
 
-                                    routine.filter(item => item.day === dayActive)
-                                        .map(item => item.exersiceItem)
-                                        .map((item) => (
-                                            item.filter(item => (item.complete))
-                                        ))[0]?.length === 0 && <div className='flex flex-col my-6 items-center w-full col-span-full'>
+                                  routine.filter(item => item.day === dayActive)
+                                    .map(item => item.exersiceItem)
+                                    .map((item) => (
+                                      item.filter(item => (item.complete))
+                                    ))[0]?.length === 0 && <div className='flex flex-col my-6 items-center w-full col-span-full'>
                                         <p className='text-4xl text-center text-slate-500'>Drag and drop completed exercises</p>
 
                                     </div>
@@ -93,7 +90,7 @@ const ExercisesComplete = ({ dayActive, setOpenSideBar }: Props) => {
                 }
             </Droppable>
         </>
-    )
+  )
 }
 
 export default ExercisesComplete

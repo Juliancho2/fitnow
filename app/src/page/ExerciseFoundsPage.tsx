@@ -14,11 +14,8 @@ const ExerciseFoundsPage = () => {
   const dispath = useDispatch<AppDispatch>()
   const { dataSearch, exerciseToAdd, isLoading } = useSelector((state: RootState) => state.dataApi)
 
-
-
   useEffect(() => {
     dispath(fetchExerciseDbApi({ name: params.name }))
-
   }, [])
 
   return (
@@ -38,7 +35,7 @@ const ExerciseFoundsPage = () => {
 
           {
             (dataSearch.length > 0 && !isLoading) && dataSearch.map((exercise) => (
-              <CardExercise exerciseData={exercise} />
+              <CardExercise key={exercise.id} exerciseData={exercise} />
             ))
           }
         </div>

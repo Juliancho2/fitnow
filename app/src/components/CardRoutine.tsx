@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteExerciseFromRoutine } from '../redux/thunk'
 import { activeEditExerciseModal, setExerciseSidebar } from '../redux/slice/dataExerciseSlice'
 import { AppDispatch } from '../redux/store/store'
-import { Draggable } from '@hello-pangea/dnd'
 
 type Props = {
   exerciseData: DataFromApiExercise,
@@ -15,10 +14,9 @@ type Props = {
   setOpenSideBar: React.Dispatch<SetStateAction<boolean>>,
 }
 
-
 const CardRoutine = ({ exerciseData, dayActive, setOpenSideBar }: Props) => {
   const { token } = useSelector((state: RootState) => state.user)
-  const [gifUrl, setGifUrl] = useState("")
+  const [gifUrl, setGifUrl] = useState('')
   const [menuRemove, setMenuRemove] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
 
@@ -37,7 +35,7 @@ const CardRoutine = ({ exerciseData, dayActive, setOpenSideBar }: Props) => {
   const removeExerciseAction = (id: string) => {
     Swal.fire({
       title: 'Are you sure you want to delete this exercise?',
-      showCancelButton: true,
+      showCancelButton: true
     }).then((result) => {
       const idAndToken = { id, token, name: dayActive }
       if (result.isConfirmed) {
@@ -53,21 +51,20 @@ const CardRoutine = ({ exerciseData, dayActive, setOpenSideBar }: Props) => {
         (
           <div className='animate-scaleImg fixed top-0 left-0 w-full h-full flex justify-center items-center z-40 '>
             <div className='w-[450px] relative z-20    rounded-md shadow-lg overflow-hidden '>
-              <FontAwesomeIcon onClick={() => setGifUrl("")} icon={faXmark} className='absolute right-5 top-5 p-1 bg-gray-200 h-6 w-6 rounded-full cursor-pointer' />
+              <FontAwesomeIcon onClick={() => setGifUrl('')} icon={faXmark} className='absolute right-5 top-5 p-1 bg-gray-200 h-6 w-6 rounded-full cursor-pointer' />
 
               <img src={gifUrl} alt="" className='w-full' />
             </div>
           </div>
         )
       }
-        <div 
-          className={`cursor-grab block max-w-xs p-4 shadow-sm shadow-indigo-100  rounded-md bg-white relative ${exerciseData.complete ? 'border border-sky-400': 'border'}`}>
+        <div
+          className={`cursor-grab block max-w-xs p-4 shadow-sm shadow-indigo-100  rounded-md bg-white relative ${exerciseData.complete ? 'border border-sky-400' : 'border'}`}>
           <div className='absolute right-5 '>
             <FontAwesomeIcon onClick={() => handleRemove()} icon={faEllipsisVertical} className='text-gray-600 hover:opacity-50   cursor-pointer text-2xl w-4' />
             {
               menuRemove &&
-              <button onClick={() => removeExerciseAction
-                (exerciseData.id)} className='flex gap-3 hover:text-red-500 bg-white shadow-md absolute left-0 z-10 items-center p-1 rounded-md text-gray-500'>
+              <button onClick={() => removeExerciseAction(exerciseData.id)} className='flex gap-3 hover:text-red-500 bg-white shadow-md absolute left-0 z-10 items-center p-1 rounded-md text-gray-500'>
                 Remove
                 <FontAwesomeIcon icon={faTrash} />
               </button>

@@ -1,19 +1,19 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { SetStateAction, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../redux/store/store';
-import { setClose } from '../redux/slice/modalSlice';
-import { FormLogin, RootState } from '../interface';
-import { faEye, faEyeSlash, faLock, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { loginUser } from '../redux/thunk';
-import SpinnerComponent from './SpinnerComponent';
-import Swal from 'sweetalert2';
-import { setError } from '../redux/slice/userSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../redux/store/store'
+import { setClose } from '../redux/slice/modalSlice'
+import { FormLogin, RootState } from '../interface'
+import { faEye, faEyeSlash, faLock, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { loginUser } from '../redux/thunk'
+import SpinnerComponent from './SpinnerComponent'
+import Swal from 'sweetalert2'
+import { setError } from '../redux/slice/userSlice'
 
 const initialForm: FormLogin = {
-  username: "",
-  password: ""
+  username: '',
+  password: ''
 }
 
 type Props = {
@@ -21,13 +21,13 @@ type Props = {
 }
 
 const Login = ({ setIsLoggin }: Props) => {
-  const [form, setForm] = useState(initialForm);
-  const [showPassword, setShowPassword] = useState(false);
-  const userState = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch<AppDispatch>();
+  const [form, setForm] = useState(initialForm)
+  const [showPassword, setShowPassword] = useState(false)
+  const userState = useSelector((state: RootState) => state.user)
+  const dispatch = useDispatch<AppDispatch>()
 
-  const navigate = useNavigate();
-  const { isLogged, isLoading, errorMessage } = userState;
+  const navigate = useNavigate()
+  const { isLogged, isLoading, errorMessage } = userState
 
   useEffect(() => {
     if (isLogged) {
@@ -35,13 +35,12 @@ const Login = ({ setIsLoggin }: Props) => {
       Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: "Login success",
+        title: 'Login success',
         showConfirmButton: false,
         timer: 1500
       })
-    };
-
-  }, [isLogged]);
+    }
+  }, [isLogged])
 
   useEffect(() => {
     if (errorMessage.isError) {
@@ -54,28 +53,26 @@ const Login = ({ setIsLoggin }: Props) => {
       })
     }
 
-    return()=>{
-      
+    return () => {
       dispatch(setError())
     }
-
   }, [errorMessage.isError])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    dispatch(loginUser(form));
+    e.preventDefault()
+    dispatch(loginUser(form))
     setForm(initialForm)
-  };
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const name = e.target.name
+    const value = e.target.value
 
     setForm({
       ...form,
-      [name]: value,
-    });
-  };
+      [name]: value
+    })
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center animate-scaleImg">
@@ -118,19 +115,21 @@ const Login = ({ setIsLoggin }: Props) => {
                   onChange={handleChange}
                   name="password"
                 />
-                {showPassword ? (
+                {showPassword
+                  ? (
                   <FontAwesomeIcon
                     onClick={() => setShowPassword(false)}
                     className="text-gray-400 mr-2 cursor-pointer"
                     icon={faEye}
                   />
-                ) : (
+                    )
+                  : (
                   <FontAwesomeIcon
                     onClick={() => setShowPassword(true)}
                     className="text-gray-400 mr-2 cursor-pointer"
                     icon={faEyeSlash}
                   />
-                )}
+                    )}
               </div>
             </div>
             <p className="text-gray-600 text-base flex items-center justify-center gap-1">
@@ -149,7 +148,7 @@ const Login = ({ setIsLoggin }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

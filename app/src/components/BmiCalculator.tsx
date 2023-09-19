@@ -1,49 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { bmiCalculator, ParamsBmiCalculator } from '../redux/thunk';
-import SpinnerComponent from './SpinnerComponent';
-import { RootState } from '../interface';
-import { AppDispatch } from '../redux/store/store';
-import { setDataBmiReset } from '../redux/slice/bmiCalculator';
-import BtnAction from './BtnAction';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { bmiCalculator, ParamsBmiCalculator } from '../redux/thunk'
+import SpinnerComponent from './SpinnerComponent'
+import { RootState } from '../interface'
+import { AppDispatch } from '../redux/store/store'
+import { setDataBmiReset } from '../redux/slice/bmiCalculator'
+import BtnAction from './BtnAction'
 
 type Props={
   color:string
 }
 
-const BmiCalculator = ({color}:Props) => {
+const BmiCalculator = ({ color }:Props) => {
   const [dataCalculator, setDataCalculator] = useState<ParamsBmiCalculator>({
     height: '',
-    weight: '',
-  });
-  const dispatch = useDispatch<AppDispatch>();
-  const { bmi, loading, error } = useSelector((state: RootState) => state.bmi);
+    weight: ''
+  })
+  const dispatch = useDispatch<AppDispatch>()
+  const { bmi, loading, error } = useSelector((state: RootState) => state.bmi)
 
-  useEffect(()=>{
-    return ()=>{
+  useEffect(() => {
+    return () => {
       dispatch(setDataBmiReset())
     }
-    
-  },[])
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const name = e.target.name
+    const value = e.target.value
 
     setDataCalculator({
       ...dataCalculator,
-      [name]: value,
-    });
-  };
+      [name]: value
+    })
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    dispatch(bmiCalculator(dataCalculator));
+    e.preventDefault()
+    dispatch(bmiCalculator(dataCalculator))
     setDataCalculator({
       height: '',
-      weight: '',
+      weight: ''
     })
-  };
+  }
 
   return (
     <div className={`flex flex-col justify-center items-center w-full min-h-[50vh] p-20 relative ${color}`}>
@@ -91,7 +90,7 @@ const BmiCalculator = ({color}:Props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BmiCalculator;
+export default BmiCalculator

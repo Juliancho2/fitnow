@@ -8,7 +8,7 @@ import { faEye, faEyeSlash, faLock, faUser, faXmark } from '@fortawesome/free-so
 import MessageErrorValidate from './MessageErrorValidate'
 import { useForm } from '../hooks/useForm'
 import Swal from 'sweetalert2'
-import { setError } from '../redux/slice/userSlice'
+import { setError, setIsLoading } from '../redux/slice/userSlice'
 import SpinnerComponent from './SpinnerComponent'
 
 const initialForm: FormValues = {
@@ -68,6 +68,7 @@ const SignUp = ({ setIsLoggin }: Props) => {
     }
     return () => {
       dispatch(setError())
+      dispatch(setIsLoading(false))
     }
   }, [errorMessage.isError])
 

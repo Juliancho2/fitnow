@@ -9,7 +9,7 @@ import { faEye, faEyeSlash, faLock, faUser, faXmark } from '@fortawesome/free-so
 import { loginUser } from '../redux/thunk'
 import SpinnerComponent from './SpinnerComponent'
 import Swal from 'sweetalert2'
-import { setError } from '../redux/slice/userSlice'
+import { setError, setIsLoading } from '../redux/slice/userSlice'
 
 const initialForm: FormLogin = {
   username: '',
@@ -55,6 +55,7 @@ const Login = ({ setIsLoggin }: Props) => {
 
     return () => {
       dispatch(setError())
+      dispatch(setIsLoading(false))
     }
   }, [errorMessage.isError])
 
@@ -83,7 +84,6 @@ const Login = ({ setIsLoggin }: Props) => {
             className='absolute top-5 right-5 text-xl text-gray-400 cursor-pointer'
             icon={faXmark}
           />
-          {/* {error && <ErrorMessage errorMessage={error} />} */}
           <form onSubmit={handleSubmit} className='mt-10 px-8'>
             <div className="mb-4">
               <label className="block text-gray-600  font-semibold text-base" htmlFor="username">

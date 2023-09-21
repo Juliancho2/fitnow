@@ -16,7 +16,7 @@ const HeaderApp = () => {
     <header className="fixed top-0 left-0 w-full min-h-[60px] z-30 bg-white border-b border-gray-300">
       <nav className="w-full max-w-screen-xl mx-auto flex justify-between items-center px-3">
         <div className="ml-4">
-          <Link to={'/'}>
+          <Link to={'/dashboard'}>
             <img src="/logo.svg" alt="" className="w-[50px]" />
           </Link>
         </div>

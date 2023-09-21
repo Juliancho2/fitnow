@@ -167,6 +167,7 @@ const SignUp = ({ setIsLoggin }: Props) => {
                             </Link>
                         </p>
                         <button
+                            disabled={!!isLoading}
                             className="w-full py-2 px-4 bg-[#11E0F8]  hover:bg-blue-600 text-white font-semibold rounded-md mt-4"
                             type="submit"
                         >
